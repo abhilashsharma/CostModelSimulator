@@ -1139,7 +1139,7 @@ public class PathQueryCostModel{
         
 static void LoadHeuristics(){
   try{/*Directly reading the gathered heuristics*/
-    FileInputStream fis = new FileInputStream("/home/abhilash/abhilash/hue_FULL.ser"); 
+    FileInputStream fis = new FileInputStream("/home/abhilash/abhilash/heuristics/hue_FULL.ser"); 
     ObjectInputStream ois = new ObjectInputStream(fis);
     hueristics = (Hueristics)ois.readObject();
     ois.close();
