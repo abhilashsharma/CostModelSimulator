@@ -672,7 +672,7 @@ public class PathQueryCostModel{
                                                                           else { 
                                                                                   avgDeg = hueristics.vertexPredicateMap.get(currentStep.property).get(currentStep.value.toString()).avgOutDegree; 
                                                                                   avgRemoteDeg = hueristics.vertexPredicateMap.get(currentStep.property).get(currentStep.value.toString()).avgRemoteOutDegree;
-                                                                                  //System.out.println("AVGDEG:" +avgDeg + "REMOTEAVGDEG:" + avgRemoteDeg);
+                                                                                  System.out.println("AVGDEG:" +avgDeg + "REMOTEAVGDEG:" + avgRemoteDeg);
                                                                           }       
                                                                   }else if(nextStep.direction == Step.Direction.IN){
                                                                           if ( currentStep.property == null) {
