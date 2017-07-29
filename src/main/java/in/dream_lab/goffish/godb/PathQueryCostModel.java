@@ -616,7 +616,7 @@ public class PathQueryCostModel{
         
         
         
-        
+        //In this network coefficient is removed from network cost to get the constant of network coefficient
         public static void computeCoeff() {
           
 
@@ -672,7 +672,7 @@ public class PathQueryCostModel{
                                                                           else { 
                                                                                   avgDeg = hueristics.vertexPredicateMap.get(currentStep.property).get(currentStep.value.toString()).avgOutDegree; 
                                                                                   avgRemoteDeg = hueristics.vertexPredicateMap.get(currentStep.property).get(currentStep.value.toString()).avgRemoteOutDegree;
-                                                                                  System.out.println("AVGDEG:" +avgDeg + "REMOTEAVGDEG:" + avgRemoteDeg);
+//                                                                                  System.out.println("AVGDEG:" +avgDeg + "REMOTEAVGDEG:" + avgRemoteDeg);
                                                                           }       
                                                                   }else if(nextStep.direction == Step.Direction.IN){
                                                                           if ( currentStep.property == null) {
@@ -693,7 +693,7 @@ public class PathQueryCostModel{
                                                                   if(nextStep.property == null){
                                                                           vScanCost = eScanCost;
                                                                           networkCost = prevScanCost * probability * avgRemoteDeg;
-                                                                          System.out.println("networkCost:" + networkCost + ",avgRemoteDeg:" + avgRemoteDeg);
+//                                                                          System.out.println("networkCost:" + networkCost + ",avgRemoteDeg:" + avgRemoteDeg);
                                                                   }
                                                                   else {
                                                                           //output(partition.getId(), subgraph.getId(),nextStep.property);
@@ -1175,7 +1175,7 @@ public static void main(String[] args){
             Args=sCurrentLine;
             System.out.println(Args);
             init(Args);
-            computeNWFixed();
+            computeCoeff();
             clear();  
     }
     br.close();
