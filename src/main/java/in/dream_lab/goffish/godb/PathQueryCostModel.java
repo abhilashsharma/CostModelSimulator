@@ -721,8 +721,12 @@ public class PathQueryCostModel{
                                                           }       
                                                                                           
                                                   }
-                                                  System.out.println("ForJoinCost:" + resultSetNumber.toString());
                                                   joinCost += resultSetNumber;
+                                                  if(pos==0 || pos == (path.size()-1)){
+                                                    joinCost=0.0;
+                                                  }
+                                                  System.out.println("ForJoinCost:" + joinCost);
+                                                  
                                                   queryCostHolder[pos] = totalCost;
                                                   
 //                                                System.out.println(pos+":"+"for:"+String.valueOf(totalCost));
@@ -798,7 +802,7 @@ public class PathQueryCostModel{
                                                           }
                                                   }
                                                   joinCost *= joinCoeff*resultSetNumber;
-                                                  System.out.println("RevJoinCost:" + resultSetNumber.toString());
+                                                  System.out.println("RevJoinCost:" + joinCost*resultSetNumber);
                                                   if ( queryCostHolder[pos] != -1 && totalCost != -1) {
                                                           queryCostHolder[pos] += totalCost;
                                                           if (pos!=0 && pos!= path.size()-1)
