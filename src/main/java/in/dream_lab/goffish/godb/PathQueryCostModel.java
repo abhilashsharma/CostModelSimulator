@@ -631,6 +631,7 @@ public class PathQueryCostModel{
                                   
                                   for (int pos = 0;pos < path.size() ; pos+=2 ){
                                           Double joinCost = new Double(0);
+                                          System.out.println("---");
                                           System.out.println("POSITION:" + pos);
                                           //forward cost
                                           {       
