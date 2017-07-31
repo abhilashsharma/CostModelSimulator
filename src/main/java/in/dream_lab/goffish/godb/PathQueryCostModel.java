@@ -709,7 +709,7 @@ public class PathQueryCostModel{
                                                                           //System.out.println(nextStep.property+":"+nextStep.value);
                                                                           if ( hueristics.edgePredicateMap.get(nextStep.property).containsKey(nextStep.value.toString()) ) {
                                                                                   vScanCost = eScanCost * hueristics.edgePredicateMap.get(nextStep.property).get(nextStep.value.toString()).probability;
-                                                                                  networkCost = networkCoeff * prevScanCost * probability * avgRemoteDeg * hueristics.edgePredicateMap.get(nextStep.property).get(nextStep.value.toString()).probability;
+                                                                                  networkCost =  prevScanCost * probability * avgRemoteDeg * hueristics.edgePredicateMap.get(nextStep.property).get(nextStep.value.toString()).probability;
                                                                                   resultSetNumber *= hueristics.edgePredicateMap.get(nextStep.property).get(nextStep.value.toString()).probability;
                                                                                   //System.out.println("Edge:" + hueristics.edgePredicateMap.get(nextStep.property).get(nextStep.value.toString()).probability);
                                                                           }
@@ -792,7 +792,7 @@ public class PathQueryCostModel{
                                                                   else {
                                                                           if ( hueristics.edgePredicateMap.get(nextStep.property).containsKey(nextStep.value.toString()) ) {
                                                                                   vScanCost = eScanCost * hueristics.edgePredicateMap.get(nextStep.property).get(nextStep.value.toString()).probability;
-                                                                                  networkCost = networkCoeff * prevScanCost * probability * avgRemoteDeg * hueristics.edgePredicateMap.get(nextStep.property).get(nextStep.value.toString()).probability;
+                                                                                  networkCost =  prevScanCost * probability * avgRemoteDeg * hueristics.edgePredicateMap.get(nextStep.property).get(nextStep.value.toString()).probability;
                                                                                   resultSetNumber *= hueristics.edgePredicateMap.get(nextStep.property).get(nextStep.value.toString()).probability;
                                                                           }
                                                                           else {
@@ -806,8 +806,8 @@ public class PathQueryCostModel{
                                                                   currentStep = revIt.previous();
                                                           }
                                                   }
-                                                  joinCost *= joinCoeff*resultSetNumber;
-                                                  System.out.println("RevJoinCost:" + joinCost*resultSetNumber);
+                                                  joinCost *= resultSetNumber;
+                                                  System.out.println("RevJoinCost:" + joinCost);
                                                   if ( queryCostHolder[pos] != -1 && totalCost != -1) {
                                                           queryCostHolder[pos] += totalCost;
                                                           if (pos!=0 && pos!= path.size()-1)
@@ -1186,7 +1186,7 @@ public static void main(String[] args){
             Args=sCurrentLine;
             System.out.println(Args);
             init(Args);
-            computeNWFixed();;
+            computeCoeff();
             clear();  
     }
     br.close();
