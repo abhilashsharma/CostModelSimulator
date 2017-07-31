@@ -87,6 +87,7 @@ public class PathQueryCostModel{
         static Double[] queryCostHolder;
         static double networkCoeff=195.41;
         static double joinCoeff=1.503;
+        static double indexCoeff;
         /**
          * Representative class to keep tab of next vertex to be processed, different for path query
          */
@@ -437,6 +438,9 @@ public class PathQueryCostModel{
                                                                                           
                                                   }
                                                   joinCost += resultSetNumber;
+                                                  if(pos==0 || pos == (path.size()-1)){
+                                                    joinCost=0.0;
+                                                  }
                                                   queryCostHolder[pos] = totalCost;
                                                   
 //                                                System.out.println(pos+":"+"for:"+String.valueOf(totalCost));
@@ -528,7 +532,7 @@ public class PathQueryCostModel{
                                                   if(!initDone)
                                                           queryCostHolder[pos] += hueristics.numVertices;
                                                   else
-                                                          queryCostHolder[pos] +=1;
+                                                          queryCostHolder[pos] +=hueristics.numVertices*indexCoeff;
                                                           
                                           }
 //                                        System.out.println(pos+":Total:"+String.valueOf(queryCostHolder[pos]));
@@ -1160,8 +1164,10 @@ static void clear(){
 public static void main(String[] args){
   networkCoeff=Double.parseDouble(args[1]);
   joinCoeff=Double.parseDouble(args[2]);
+  indexCoeff=Double.parseDouble(args[3]);
   System.out.println("Network Coeff:"+ networkCoeff);
   System.out.println("Join Coeff:" + joinCoeff);
+  System.out.println("Index Coeff:" + indexCoeff);
   LoadHeuristics();
   String queryStr="patid:string[4837891]@out?@patid:string[3287759]//0//163";
   String Args="";
@@ -1180,7 +1186,7 @@ public static void main(String[] args){
             Args=sCurrentLine;
             System.out.println(Args);
             init(Args);
-            computeCoeff();
+            computeNWFixed();;
             clear();  
     }
     br.close();
