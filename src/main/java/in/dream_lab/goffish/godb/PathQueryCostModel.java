@@ -391,7 +391,7 @@ public class PathQueryCostModel{
                                                                           else { 
                                                                                   avgDeg = hueristics.vertexPredicateMap.get(currentStep.property).get(currentStep.value.toString()).avgOutDegree; 
                                                                                   avgRemoteDeg = hueristics.vertexPredicateMap.get(currentStep.property).get(currentStep.value.toString()).avgRemoteOutDegree;
-                                                                                  //System.out.println("AVGDEG:" +avgDeg + "REMOTEAVGDEG:" + avgRemoteDeg);
+//                                                                                  System.out.println("AVGDEG:" +avgDeg + "REMOTEAVGDEG:" + avgRemoteDeg);
                                                                           }       
                                                                   }else if(nextStep.direction == Step.Direction.IN){
                                                                           if ( currentStep.property == null) {
@@ -412,6 +412,8 @@ public class PathQueryCostModel{
                                                                   if(nextStep.property == null){
                                                                           vScanCost = eScanCost;
                                                                           networkCost = networkCoeff * prevScanCost * probability * avgRemoteDeg;
+                                                                          System.out
+                                                                              .println("Network:"+ prevScanCost + "," + probability + "," + avgRemoteDeg);
                                                                   }
                                                                   else {
                                                                           //output(partition.getId(), subgraph.getId(),nextStep.property);
