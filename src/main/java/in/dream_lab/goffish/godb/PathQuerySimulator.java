@@ -1224,7 +1224,7 @@ public class PathQuerySimulator{
 	        			int curN=curL + curS;
 	        			n[sgid][sp][step]=curN;
 	        			
-	        			System.out.println("Sim:" + curN + "," + curL + "," + curS);
+	        			System.out.println("Sim:" +sgid+","+sp+","+step+"," + curN + "," + curL + "," + curS);
         			}
         		}
      		}
@@ -1308,6 +1308,7 @@ static void clear(){
 }
         
 public static void main(String[] args){
+	System.out.println("Simulating Path Query");
 //  networkCoeff=Double.parseDouble(args[1]);
 //  joinCoeff=Double.parseDouble(args[2]);
 //  indexCoeff=Double.parseDouble(args[3]);
@@ -1315,7 +1316,7 @@ public static void main(String[] args){
 //  System.out.println("Join Coeff:" + joinCoeff);
 //  System.out.println("Index Coeff:" + indexCoeff);
   LoadHeuristics();
-  String queryStr="patid:string[4837891]@out?@patid:string[3287759]//0//163";
+//  String queryStr="patid:string[4837891]@out?@patid:string[3287759]//0//163";
   String Args="";
   String fileName=args[0];
   try
