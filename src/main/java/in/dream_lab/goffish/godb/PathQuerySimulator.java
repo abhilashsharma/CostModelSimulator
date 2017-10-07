@@ -1347,7 +1347,7 @@ public static void main(String[] args){
     }
     br.close();
   }catch(Exception e){
-    System.out.println("Error:"+e.getMessage().toString());
+   e.printStackTrace();
   }
     
   
