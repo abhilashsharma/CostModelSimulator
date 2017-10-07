@@ -1152,6 +1152,9 @@ public class PathQuerySimulator{
 
         
         static void LoadMetagraph(String fileName,int[] V,float[][] W) throws IOException {
+        	try {
+        		
+        	
         	HashMap<String,String> subgraphRemap=new HashMap<>();
         	
         	subgraphRemap.put("19", "0");
@@ -1185,6 +1188,10 @@ public class PathQuerySimulator{
             }
             
             br.close();
+        	}
+        	catch(Exception e) {
+        		e.printStackTrace();
+        	}
         }
 
         /**
