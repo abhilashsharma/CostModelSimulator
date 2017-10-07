@@ -1197,7 +1197,7 @@ public class PathQuerySimulator{
         	int[] V =new int[4];
         	float[][] W = new float[4][4];
         	//TODO:populate metagraph information here
-        	String fileName="/home/abhilash/Documents/Cit4PMetaGraph.txt";
+        	String fileName="/home/abhilash/abhilash/Cit4PMetaGraph.txt";
         	LoadMetagraph(fileName,V,W);
         	
         	
