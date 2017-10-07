@@ -1,4 +1,5 @@
 package in.dream_lab.goffish.godb;
+import org.apache.cassandra.thrift.Cassandra.AsyncProcessor.system_add_column_family;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -32,6 +33,8 @@ public class IndexMounter {
 	
 	public static void main(String[] args){
 //		System.out.println("Test");
-		mountIndexToMemory();
+//		mountIndexToMemory();
+		String[] str={"123","345","457"};
+		System.out.println(str.toString());
 	}
 }

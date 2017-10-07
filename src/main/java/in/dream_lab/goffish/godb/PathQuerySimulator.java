@@ -8,6 +8,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -61,11 +62,11 @@ import org.apache.lucene.util.Version;
 
 
 
-public class PathQueryCostModel{ 
+public class PathQuerySimulator{ 
         
         
         
-        public static final Log LOG = LogFactory.getLog(PathQueryCostModel.class);
+        public static final Log LOG = LogFactory.getLog(PathQuerySimulator.class);
         
         String Arguments=null;
         //Required for lucene 
@@ -334,7 +335,9 @@ public class PathQueryCostModel{
         
         
         
-        
+        /**
+         * 
+         */
  
         
         public static void computeNWFixed() {
@@ -1146,6 +1149,147 @@ public class PathQueryCostModel{
                 
                
         }
+
+        
+        static void LoadMetagraph(String fileName,int[] V,float[][] W) throws IOException {
+        	HashMap<String,String> subgraphRemap=new HashMap<>();
+        	
+        	subgraphRemap.put("19", "0");
+        	subgraphRemap.put("4294967307", "1");
+        	subgraphRemap.put("8589934609", "2");
+        	subgraphRemap.put("12884901903", "3");
+        	FileReader fr = new FileReader(fileName);
+            BufferedReader br = new BufferedReader(fr);
+
+            String sCurrentLine;
+
+            while ((sCurrentLine = br.readLine()) != null) {
+               String[] data=sCurrentLine.split(":");
+               Long  reSGID=Long.parseLong(data[2]);
+               Long localVertexCount=Long.parseLong(data[3]);
+               V[reSGID.intValue()]=localVertexCount.intValue();
+               Long remoteEdgeCount=Long.parseLong(data[4]);
+               String outSubgraph=data[5];
+               String[] outData=outSubgraph.split(",");
+               for(int i=1;i<outData.length;i+=2) {
+            	   String sgid=outData[i];
+            	   String outEdgeCount=outData[i+1];
+            	   String outReMap=subgraphRemap.get(sgid);
+            	   if(outReMap!=null) {
+            		   Long outReSGID=Long.parseLong(outReMap);
+            		   Long outEdges=Long.parseLong(outEdgeCount);
+            		   float outFraction=(float)outEdges/remoteEdgeCount;
+            		   W[reSGID.intValue()][outReSGID.intValue()]=outFraction;
+            	   }
+               }
+            }
+            
+            br.close();
+        }
+
+        /**
+         * Simulation of compute for concurrent queries 
+         * @throws IOException 
+         */
+        
+        public static void computeSimulator() throws IOException {
+            //metagraph  information , number of vertices per subgraph and fraction of edges between subgraphs
+        	int[] V =new int[4];
+        	float[][] W = new float[4][4];
+        	//TODO:populate metagraph information here
+        	String fileName="/home/abhilash/Documents/Cit4PMetaGraph.txt";
+        	LoadMetagraph(fileName,V,W);
+        	
+        	
+        	//assuming number of partitions same as number of subgraphs
+        	//Taking upper bounds on the size of this matrix
+        	//matrix index: subgraphid,superstep,step
+        	//taken as integer because we need floor
+        	int[][][] n = new int[4][path.size()][path.size()];
+        	
+        	//residuals from earlier superstep
+        	int[][][] l = new int[4][path.size()][path.size()];
+        	
+        	//Compute element count
+        	int[][][] s = new int[4][path.size()][path.size()];
+        	
+        	for(int sgid=0;sgid<n.length;sgid++)//iterate through subgraphs
+        	{
+        		//for each subgraph,iterate through supersteps
+        		for(int sp=1;sp<n[sgid].length;sp++) {
+        			//for each superstep, iterate through steps
+        			for(int step=0;step<n[sgid][sp].length;step++) {
+	        			int curL=L(sgid,sp-1,step,n,l,s,V,W);
+	        			int curS=S(sgid,sp,step,n,l,s,V,W);
+	        			int curN=curL + curS;
+	        			n[sgid][sp][step]=curN;
+	        			
+	        			System.out.println("Sim:" + curN + "," + curL + "," + curS);
+        			}
+        		}
+     		}
+    }        
+        
+        
+        
+    static int S(int _sgid,int _sp,int _step,int[][][] _n,int[][][] _l,int[][][] _s,int[] V,float[][] W) {
+    	
+    	int res;
+    	Step s=path.get(_step);
+		String property = s.property;
+		String value=s.value.toString();
+    	if(_step==0) {
+    		res=(int) (V[_sgid]*hueristics.probabilityOfVertex(property, value));
+    	}
+    	else if(_step%2==0) {
+    		
+    		res=(int) (N(_sgid,_sp,_step-1,_n)* hueristics.probabilityOfVertex(property, value));
+    	}
+    	else {   		
+    		res = (int) (N(_sgid,_sp,_step-1,_n) * hueristics.avgDeg(property, value, true, true)); //hueristics.probabilityOfEdge(property, value)
+    	}
+    	_s[_sgid][_sp][_step]=res;
+    	return res;
+    }
+    
+static int L(int _sgid,int _sp,int _step,int[][][] _n,int[][][] _l,int[][][] _s,int[] V,float[][] W) {
+	int res;
+	
+	if(_sp==1 || _step%2==0) {
+		res=0;
+	}
+	else {
+		int sum=0;
+		for(int j=0;j<_n.length;j++) {
+			sum+=R(_sgid,_sp,_step,_n,_l,_s,V,W)*W[j][_sgid];
+		}
+		res=sum;
+	}
+    _l[_sgid][_sp][_step]=res;	
+    return res;	
+   }
+
+static int R(int _sgid,int _sp,int _step,int[][][] _n,int[][][] _l,int[][][] _s,int[] V,float[][] W) {
+	
+	int res;
+    if(_step%2==0) {
+    	res=0;
+    }
+    else
+    {
+    	int h=(_step+1)/2;
+    	Step s=path.get(h);
+		String property = s.property;
+		String value=s.value.toString();
+    	res=(int) (N(_sgid,_sp,h,_n)*hueristics.avgRemoteDeg(property, value, true, true));
+    }
+	
+	return res;
+}
+static int N(int _sgid,int _sp,int _step,int[][][] _n) {
+	
+	return _n[_sgid][_sp][_step];
+}
         
         
 static void LoadHeuristics(){
@@ -1188,7 +1332,7 @@ public static void main(String[] args){
             Args=sCurrentLine;
             System.out.println(Args);
             init(Args);
-            computeNWFixed();
+            computeSimulator();
             clear();  
     }
     br.close();
