@@ -1308,12 +1308,12 @@ static void clear(){
 }
         
 public static void main(String[] args){
-  networkCoeff=Double.parseDouble(args[1]);
-  joinCoeff=Double.parseDouble(args[2]);
-  indexCoeff=Double.parseDouble(args[3]);
-  System.out.println("Network Coeff:"+ networkCoeff);
-  System.out.println("Join Coeff:" + joinCoeff);
-  System.out.println("Index Coeff:" + indexCoeff);
+//  networkCoeff=Double.parseDouble(args[1]);
+//  joinCoeff=Double.parseDouble(args[2]);
+//  indexCoeff=Double.parseDouble(args[3]);
+//  System.out.println("Network Coeff:"+ networkCoeff);
+//  System.out.println("Join Coeff:" + joinCoeff);
+//  System.out.println("Index Coeff:" + indexCoeff);
   LoadHeuristics();
   String queryStr="patid:string[4837891]@out?@patid:string[3287759]//0//163";
   String Args="";
