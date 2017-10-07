@@ -1168,7 +1168,7 @@ public class PathQuerySimulator{
 
             while ((sCurrentLine = br.readLine()) != null) {
                String[] data=sCurrentLine.split(":");
-               Long  reSGID=Long.parseLong(data[2]);
+               Long  reSGID=Long.parseLong(subgraphRemap.get(data[2]));
                Long localVertexCount=Long.parseLong(data[3]);
                V[reSGID.intValue()]=localVertexCount.intValue();
                Long remoteEdgeCount=Long.parseLong(data[4]);
