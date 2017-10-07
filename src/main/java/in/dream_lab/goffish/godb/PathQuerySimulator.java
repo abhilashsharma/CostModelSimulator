@@ -1316,9 +1316,11 @@ public static void main(String[] args){
 //  System.out.println("Join Coeff:" + joinCoeff);
 //  System.out.println("Index Coeff:" + indexCoeff);
   LoadHeuristics();
+  System.out.println("Completed Loading of heuristics");
 //  String queryStr="patid:string[4837891]@out?@patid:string[3287759]//0//163";
   String Args="";
   String fileName=args[0];
+  System.out.println("reading File for arguments:" + args[0]);
   try
   {
     FileReader fr = new FileReader(fileName);
