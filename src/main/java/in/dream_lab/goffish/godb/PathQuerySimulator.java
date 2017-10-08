@@ -1211,6 +1211,12 @@ public class PathQuerySimulator{
         		System.out.println("VCount:"+count);
         	}
         	
+        	for(int i=0;i<W.length;i++) {
+        		for(int j=0;j<W[i].length;j++) {
+        			System.out.print(W[i][j]+" ");
+        		}
+        	}
+        	
         	System.out.println("Verification Done");
         	
         	//assuming number of partitions same as number of subgraphs
