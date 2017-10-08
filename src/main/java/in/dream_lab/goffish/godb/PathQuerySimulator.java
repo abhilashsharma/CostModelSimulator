@@ -1257,6 +1257,7 @@ public class PathQuerySimulator{
 		String property = s.property;
 		String value=s.value.toString();
     	if(_sp==1 &&_step==0) {
+    		System.out.println("In:"+(V[_sgid]*hueristics.probabilityOfVertex(property, value)));
     		res=(int) (V[_sgid]*hueristics.probabilityOfVertex(property, value));
     	}
     	else if(_step%2==0) {
