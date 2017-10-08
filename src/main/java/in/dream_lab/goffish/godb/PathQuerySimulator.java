@@ -1217,7 +1217,7 @@ public class PathQuerySimulator{
         		}
         	}
         	
-        	System.out.println("Verification Done");
+        	System.out.println("\nVerification Done");
         	
         	//assuming number of partitions same as number of subgraphs
         	//Taking upper bounds on the size of this matrix
@@ -1256,7 +1256,7 @@ public class PathQuerySimulator{
     	Step s=path.get(_step);
 		String property = s.property;
 		String value=s.value.toString();
-    	if(_step==0) {
+    	if(_sp==1 &&_step==0) {
     		res=(int) (V[_sgid]*hueristics.probabilityOfVertex(property, value));
     	}
     	else if(_step%2==0) {
