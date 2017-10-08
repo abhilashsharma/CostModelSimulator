@@ -1308,6 +1308,9 @@ static int R(int _sgid,int _sp,int _step,int[][][] _n,int[][][] _l,int[][][] _s,
 }
 static int N(int _sgid,int _sp,int _step,int[][][] _n) {
 	
+	if(_step==-1)
+		return 0;
+	
 	return _n[_sgid][_sp][_step];
 }
         
