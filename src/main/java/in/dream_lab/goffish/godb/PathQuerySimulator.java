@@ -1297,9 +1297,9 @@ static int R(int _sgid,int _sp,int _step,int[][][] _n,int[][][] _l,int[][][] _s,
     else
     {
     	int h=(_step+1)/2;
-    	Step s=path.get(h);
+    	Step s=path.get(2*h);
 		String property = s.property;
-		System.out.println("H:"+ h+" prop:"+property+" val:"+s.value);
+		System.out.println("H:"+ 2*h+" prop:"+property+" val:"+s.value);
 		String value=s.value.toString();
     	res=(int) (N(_sgid,_sp,h,_n)*hueristics.avgRemoteDeg(property, value, true, true));
     }
