@@ -1206,7 +1206,12 @@ public class PathQuerySimulator{
         	//TODO:populate metagraph information here
         	String fileName="/home/abhilash/abhilash/Cit4PMetaGraph.txt";
         	LoadMetagraph(fileName,V,W);
+        	System.out.println("Verifying MetaGraph:");
+        	for(int count:V) {
+        		System.out.println("VCount:"+count);
+        	}
         	
+        	System.out.println("Verification Done");
         	
         	//assuming number of partitions same as number of subgraphs
         	//Taking upper bounds on the size of this matrix
