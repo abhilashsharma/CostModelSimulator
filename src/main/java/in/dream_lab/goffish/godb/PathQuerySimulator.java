@@ -1255,17 +1255,17 @@ public class PathQuerySimulator{
     	int res;
     	Step s=path.get(_step);
 		String property = s.property;
-		String value=s.value.toString();
+		Object value=s.value;
     	if(_sp==1 &&_step==0) {
-    		System.out.println("In:"+(V[_sgid]*hueristics.probabilityOfVertex(property, value)));
-    		res=(int) (V[_sgid]*hueristics.probabilityOfVertex(property, value));
+    		System.out.println("In:"+(V[_sgid]*hueristics.probabilityOfVertex(property, value.toString())));
+    		res=(int) (V[_sgid]*hueristics.probabilityOfVertex(property, value.toString()));
     	}
     	else if(_step%2==0) {
     		
-    		res=(int) (N(_sgid,_sp,_step-1,_n)* hueristics.probabilityOfVertex(property, value));
+    		res=(int) (N(_sgid,_sp,_step-1,_n)* hueristics.probabilityOfVertex(property, value.toString()));
     	}
-    	else {   		
-    		res = (int) (N(_sgid,_sp,_step-1,_n) * hueristics.avgDeg(property, value, true, true)); //hueristics.probabilityOfEdge(property, value)
+    	else {
+    		res = (int) (N(_sgid,_sp,_step-1,_n) * hueristics.avgDeg(property,null , true, true)); //hueristics.probabilityOfEdge(property, value)
     	}
     	_s[_sgid][_sp][_step]=res;
     	return res;
