@@ -1253,19 +1253,29 @@ public class PathQuerySimulator{
     static int S(int _sgid,int _sp,int _step,int[][][] _n,int[][][] _l,int[][][] _s,int[] V,float[][] W) {
     	
     	int res;
-    	Step s=path.get(_step);
-		String property = s.property;
-		Object value=s.value;
+    	
     	if(_sp==1 &&_step==0) {
+    		Step s=path.get(_step);
+    		String property = s.property;
+    		Object value=s.value;
     		System.out.println("In:"+(V[_sgid]*hueristics.probabilityOfVertex(property, value.toString())));
     		res=(int) (V[_sgid]*hueristics.probabilityOfVertex(property, value.toString()));
     	}
     	else if(_step%2==0) {
-    		
+    		int h=(_step+2)/2;//for vertex step h is this
+    		int index=2*h-2;
+    		Step s=path.get(index);
+    		String property = s.property;
+    		Object value=s.value;
     		res=(int) (N(_sgid,_sp,_step-1,_n)* hueristics.probabilityOfVertex(property, value.toString()));
     	}
     	else {
-    		res = (int) (N(_sgid,_sp,_step-1,_n) * hueristics.avgDeg(property,null , true, true)); //hueristics.probabilityOfEdge(property, value)
+    		int h=(_step+1)/2;//for edge step h is this
+    		int vindex=2*h-2;//for vertex
+    		Step s=path.get(vindex);
+    		String property = s.property;
+    		Object value=s.value;
+    		res = (int) (N(_sgid,_sp,_step-1,_n) * hueristics.avgDeg(property,value.toString() , true, true)); //hueristics.probabilityOfEdge(property, value)
     	}
     	_s[_sgid][_sp][_step]=res;
     	return res;
@@ -1297,11 +1307,12 @@ static int R(int _sgid,int _sp,int _step,int[][][] _n,int[][][] _l,int[][][] _s,
     else
     {
     	int h=(_step+1)/2;
-    	Step s=path.get(2*h);
+    	int vindex=2*h-2;
+    	Step s=path.get(vindex);
 		String property = s.property;
 //		System.out.println("H:"+ 2*h+" prop:"+property+" val:"+s.value);
 		String value=s.value.toString();
-    	res=(int) (N(_sgid,_sp,h,_n)*hueristics.avgRemoteDeg(property, value, true, true));
+    	res=(int) (N(_sgid,_sp,_step-1,_n)*hueristics.avgRemoteDeg(property, value, true, true));
     }
 	
 	return res;
