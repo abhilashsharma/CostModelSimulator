@@ -1230,11 +1230,11 @@ public class PathQuerySimulator{
         	
         	//Compute element count
         	int[][][] s = new int[4][path.size()][path.size()];
-        	
-        	for(int sgid=0;sgid<n.length;sgid++)//iterate through subgraphs
+        	for(int sp=1;sp<path.size();sp++) 
+        	//iterate through supersteps
         	{
-        		//for each subgraph,iterate through supersteps
-        		for(int sp=1;sp<n[sgid].length;sp++) {
+        		//for each superstep,iterate through sugraph
+        		for(int sgid=0;sgid<n.length;sgid++){
         			//for each superstep, iterate through steps
         			for(int step=0;step<n[sgid][sp].length;step++) {
 	        			int curL=L(sgid,sp-1,step,n,l,s,V,W);
