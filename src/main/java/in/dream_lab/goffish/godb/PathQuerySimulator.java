@@ -1275,7 +1275,7 @@ public class PathQuerySimulator{
     		Step s=path.get(vindex);
     		String property = s.property;
     		Object value=s.value;
-    		res = (int) (N(_sgid,_sp-1,_step,_n) * hueristics.avgDeg(property,value.toString() , true, true)); //hueristics.probabilityOfEdge(property, value)
+    		res = (int) (N(_sgid,_sp,_step-1,_n) * hueristics.avgDeg(property,value.toString() , true, true)); //hueristics.probabilityOfEdge(property, value)
     	}
     	_s[_sgid][_sp][_step]=res;
     	return res;
