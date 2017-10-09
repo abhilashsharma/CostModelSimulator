@@ -1312,7 +1312,7 @@ static int R(int _sgid,int _sp,int _step,int[][][] _n,int[][][] _l,int[][][] _s,
     	Step s=path.get(vindex);
 		String property = s.property;
 		String value=s.value.toString();
-		System.out.println("H:"+ 2*h+" prop:"+property+" val:"+s.value + " "+hueristics.avgRemoteDeg(property, value, true, true));
+		System.out.println("H:"+ 2*h+" prop:"+property+" val:"+s.value + " "+hueristics.avgRemoteDeg(property, value, true, true) +" " + N(_sgid,_sp,_step-1,_n));
     	res=(int) (N(_sgid,_sp,_step-1,_n)*hueristics.avgRemoteDeg(property, value, true, true));
     	System.out.println("RemoteRES:"+res);
     }
