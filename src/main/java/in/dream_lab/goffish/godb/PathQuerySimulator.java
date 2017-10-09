@@ -1294,7 +1294,8 @@ static int L(int _sgid,int _sp,int _step,int[][][] _n,int[][][] _l,int[][][] _s,
 		}
 		res=sum;
 	}
-    _l[_sgid][_sp][_step]=res;	
+    _l[_sgid][_sp][_step]=res;
+    System.out.println("LRes:"+ _l[_sgid][_sp][_step]);
     return res;	
    }
 
@@ -1313,6 +1314,7 @@ static int R(int _sgid,int _sp,int _step,int[][][] _n,int[][][] _l,int[][][] _s,
 		String value=s.value.toString();
 		System.out.println("H:"+ 2*h+" prop:"+property+" val:"+s.value + " "+hueristics.avgRemoteDeg(property, value, true, true));
     	res=(int) (N(_sgid,_sp,_step-1,_n)*hueristics.avgRemoteDeg(property, value, true, true));
+    	System.out.println("RemoteRES:"+res);
     }
 	
 	return res;
