@@ -1284,7 +1284,7 @@ public class PathQuerySimulator{
 static int L(int _sgid,int _sp,int _step,int[][][] _n,int[][][] _l,int[][][] _s,int[] V,float[][] W) {
 	int res;
 	
-	if(_sp==1 || _step%2==0) {
+	if(_sp==0 || _step%2==0) {
 		res=0;
 	}
 	else {
