@@ -27,10 +27,18 @@ public class EdgeFileSuccinct {
          PrintWriter writer5 = new PrintWriter(OutputDir+"/part-5", "UTF-8");
          PrintWriter writer6 = new PrintWriter(OutputDir+"/part-6", "UTF-8");
          PrintWriter writer7 = new PrintWriter(OutputDir+"/part-7", "UTF-8");
-//         PrintWriter writer8 = new PrintWriter(OutputDir+"/part-8", "UTF-8");
-//         PrintWriter writer9 = new PrintWriter(OutputDir+"/part-9", "UTF-8");
-//         PrintWriter writer10 = new PrintWriter(OutputDir+"/part-10", "UTF-8");
-//         PrintWriter writer11 = new PrintWriter(OutputDir+"/part-11", "UTF-8");
+         PrintWriter writer8 = new PrintWriter(OutputDir+"/part-8", "UTF-8");
+         PrintWriter writer9 = new PrintWriter(OutputDir+"/part-9", "UTF-8");
+         PrintWriter writer10 = new PrintWriter(OutputDir+"/part-10", "UTF-8");
+         PrintWriter writer11 = new PrintWriter(OutputDir+"/part-11", "UTF-8");
+         PrintWriter writer12 = new PrintWriter(OutputDir+"/part-12", "UTF-8");
+         PrintWriter writer13 = new PrintWriter(OutputDir+"/part-13", "UTF-8");
+         PrintWriter writer14 = new PrintWriter(OutputDir+"/part-14", "UTF-8");
+         PrintWriter writer15 = new PrintWriter(OutputDir+"/part-15", "UTF-8");
+         PrintWriter writer16 = new PrintWriter(OutputDir+"/part-16", "UTF-8");
+         PrintWriter writer17 = new PrintWriter(OutputDir+"/part-17", "UTF-8");
+         PrintWriter writer18 = new PrintWriter(OutputDir+"/part-18", "UTF-8");
+         PrintWriter writer19 = new PrintWriter(OutputDir+"/part-19", "UTF-8");
          
 
          while ((sCurrentLine = br.readLine()) != null) {
@@ -104,18 +112,43 @@ public class EdgeFileSuccinct {
 		case 7:
 			writer7.println(vertexAdj.toString());
 			break;
-//		case 8:
-//			writer8.println(vertexAdj.toString());
-//			break;
-//		case 9:
-//			writer9.println(vertexAdj.toString());
-//			break;
-//		case 10:
-//			writer10.println(vertexAdj.toString());
-//			break;
-//		case 11:
-//			writer11.println(vertexAdj.toString());
-//			break;			
+		case 8:
+			writer8.println(vertexAdj.toString());
+			break;
+		case 9:
+			writer9.println(vertexAdj.toString());
+			break;
+		case 10:
+			writer10.println(vertexAdj.toString());
+			break;
+		case 11:
+			writer11.println(vertexAdj.toString());
+			break;
+		case 12:
+			writer12.println(vertexAdj.toString());
+			break;
+		case 13:
+			writer13.println(vertexAdj.toString());
+			break;
+		case 14:
+			writer14.println(vertexAdj.toString());
+			break;
+		case 15:
+			writer15.println(vertexAdj.toString());
+			break;
+		case 16:
+			writer16.println(vertexAdj.toString());
+			break;
+		case 17:
+			writer17.println(vertexAdj.toString());
+			break;
+		case 18:
+			writer18.println(vertexAdj.toString());
+			break;
+		case 19:
+			writer19.println(vertexAdj.toString());
+			break;
+	
 		default:
 			System.out.println("PID not in range exception");
 				break;
@@ -142,13 +175,31 @@ public class EdgeFileSuccinct {
          writer7.flush();
          writer7.close();
          
-//         writer8.flush();
-//         writer8.close();
-//         writer9.flush();
-//         writer9.close();
-//         writer10.flush();
-//         writer10.close();
-//         writer11.flush();
-//         writer11.close();
+         writer8.flush();
+         writer8.close();
+         writer9.flush();
+         writer9.close();
+         writer10.flush();
+         writer10.close();
+         writer11.flush();
+         writer11.close();
+         writer12.flush();
+         writer12.close();
+         writer13.flush();
+         writer13.close();
+         
+         writer14.flush();
+         writer14.close();
+         writer15.flush();
+         writer15.close();
+         writer16.flush();
+         writer16.close();
+         writer17.flush();
+         writer17.close();
+         
+         writer18.flush();
+         writer18.close();
+         writer19.flush();
+         writer19.close();
 	}
 }
