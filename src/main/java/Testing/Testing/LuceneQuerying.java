@@ -84,65 +84,71 @@ public class LuceneQuerying {
 		}
 	public static void main(String[] args) throws InterruptedException, IOException {
 		
-		initLucene(0l);
-		String fileName=args[0];
-		String propertyName = args[1];
-		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-		    String line;
-		    while ((line = br.readLine()) != null) {
-		    	long start=System.currentTimeMillis();
-		    	makeQuery(propertyName, line.trim());
-		    	System.out.println(line.trim()+","+ hits.length + "," + (System.currentTimeMillis()-start));
-		    	clear();
-		    }
-		}catch(Exception e) {
-			
-		}
 		
-		initLucene(1l);
-//		String fileName=args[0];
-//		String propertyName = args[1];
-		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-		    String line;
-		    while ((line = br.readLine()) != null) {
+		int partid=Integer.parseInt(args[1]);
+		initLucene(partid);
+		String propertyName = args[0];
+		long totalHits=0;
+		try  {
+		   for(long i=0;i<1000l;i++) {
 		    	long start=System.currentTimeMillis();
-		    	makeQuery(propertyName, line.trim());
-		    	System.out.println(line.trim()+","+ hits.length + "," + (System.currentTimeMillis()-start));
+		    	Long q=i;
+		    	makeQuery(propertyName, q.toString());
+		    	System.out.println(q+","+ hits.length + "," + (System.currentTimeMillis()-start));
+		    	totalHits+=hits.length;
 		    	clear();
 		    }
+		   
+		   
+		   System.out.println("Number of Vertices:" + totalHits);
 		}catch(Exception e) {
 			
 		}
-
-		initLucene(2l);
-//		String fileName=args[0];
-//		String propertyName = args[1];
-		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-		    String line;
-		    while ((line = br.readLine()) != null) {
-		    	long start=System.currentTimeMillis();
-		    	makeQuery(propertyName, line.trim());
-		    	System.out.println(line.trim()+","+ hits.length + "," + (System.currentTimeMillis()-start));
-		    	clear();
-		    }
-		}catch(Exception e) {
-			
-		}
-		
-		initLucene(3l);
-//		String fileName=args[0];
-//		String propertyName = args[1];
-		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-		    String line;
-		    while ((line = br.readLine()) != null) {
-		    	long start=System.currentTimeMillis();
-		    	makeQuery(propertyName, line.trim());
-		    	System.out.println(line.trim()+","+ hits.length + "," + (System.currentTimeMillis()-start));
-		    	clear();
-		    }
-		}catch(Exception e) {
-			
-		}
+//		
+//		initLucene(1l);
+////		String fileName=args[0];
+////		String propertyName = args[1];
+//		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+//		    String line;
+//		    while ((line = br.readLine()) != null) {
+//		    	long start=System.currentTimeMillis();
+//		    	makeQuery(propertyName, line.trim());
+//		    	System.out.println(line.trim()+","+ hits.length + "," + (System.currentTimeMillis()-start));
+//		    	clear();
+//		    }
+//		}catch(Exception e) {
+//			
+//		}
+//
+//		initLucene(2l);
+////		String fileName=args[0];
+////		String propertyName = args[1];
+//		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+//		    String line;
+//		    while ((line = br.readLine()) != null) {
+//		    	long start=System.currentTimeMillis();
+//		    	makeQuery(propertyName, line.trim());
+//		    	System.out.println(line.trim()+","+ hits.length + "," + (System.currentTimeMillis()-start));
+//		    	clear();
+//		    }
+//		}catch(Exception e) {
+//			
+//		}
+//		
+//		initLucene(3l);
+////		String fileName=args[0];
+////		String propertyName = args[1];
+//		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+//		    String line;
+//		    while ((line = br.readLine()) != null) {
+//		    	long start=System.currentTimeMillis();
+//		    	makeQuery(propertyName, line.trim());
+//		    	System.out.println(line.trim()+","+ hits.length + "," + (System.currentTimeMillis()-start));
+//		    	clear();
+//		    }
+//		}catch(Exception e) {
+//			
+//		}
 		
 		
 	}

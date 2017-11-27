@@ -62,11 +62,11 @@ import org.apache.lucene.util.Version;
 
 
 
-public class PathQuerySimulatorFractionalSubgraphLevel{ 
+public class PathQuerySimulatorFractionalSubgraphLevelResidualTermination{ 
         
         
         
-        public static final Log LOG = LogFactory.getLog(PathQuerySimulatorFractionalSubgraphLevel.class);
+        public static final Log LOG = LogFactory.getLog(PathQuerySimulatorFractionalSubgraphLevelResidualTermination.class);
         
         String Arguments=null;
         //Required for lucene 
@@ -491,7 +491,12 @@ static float L(int _sgid,int _sp,int _step,float[][][] _n,float[][][] _l,float[]
 			sum+=R(_sgid,_sp,_step,_n,_l,_s,V,W)*W[j][_sgid];
 			System.out.println("LResSG:"+j+","+_sgid+":"+R(_sgid,_sp,_step,_n,_l,_s,V,W)*W[j][_sgid]);
 		}
-		res=sum;
+		if(sum>=1) {
+			res=sum;
+		}
+		else {
+			res=0;
+		}
 	}
     _l[_sgid][_sp][_step]=res;
     System.out.println("LRes:"+ _l[_sgid][_sp][_step]);
