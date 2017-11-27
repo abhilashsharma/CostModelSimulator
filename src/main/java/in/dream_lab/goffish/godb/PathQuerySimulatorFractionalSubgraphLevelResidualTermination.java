@@ -545,7 +545,7 @@ static void LoadHeuristics(){
 	for(Map.Entry<String, String> entry:subgraphRemap.entrySet()) {
 		
 		  try{/*Directly reading the gathered heuristics*/
-		    FileInputStream fis = new FileInputStream("/home/abhilash/abhilash/heuristics/hue_"+entry.getKey()+".ser"); 
+		    FileInputStream fis = new FileInputStream("/home/abhilash/abhilash/heuristicsCitPatent/hue_"+entry.getKey()+".ser"); 
 		    ObjectInputStream ois = new ObjectInputStream(fis);
 		    hueristics[Integer.parseInt(entry.getValue())] = (Hueristics)ois.readObject();
 		    ois.close();
