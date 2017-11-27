@@ -488,15 +488,21 @@ static float L(int _sgid,int _sp,int _step,float[][][] _n,float[][][] _l,float[]
 	else {
 		float sum=0;
 		for(int j=0;j<_n.length;j++) {
-			sum+=R(_sgid,_sp,_step,_n,_l,_s,V,W)*W[j][_sgid];
+			float t=R(_sgid,_sp,_step,_n,_l,_s,V,W)*W[j][_sgid];
+			if(t<1) {// this is subgraph level residual termination when it is less than 1
+				t=0;
+			}
+			sum+=t;
 			System.out.println("LResSG:"+j+","+_sgid+":"+R(_sgid,_sp,_step,_n,_l,_s,V,W)*W[j][_sgid]);
 		}
-		if(sum>=1) {
-			res=sum;
-		}
-		else {
-			res=0;
-		}
+		res=sum;
+		//NOTE:This block is for terminating based on sum of residuals being less than 1
+//		if(sum>=1) {
+//			res=sum;
+//		}
+//		else {
+//			res=0;
+//		}
 	}
     _l[_sgid][_sp][_step]=res;
     System.out.println("LRes:"+ _l[_sgid][_sp][_step]);
