@@ -493,7 +493,7 @@ static float L(int _sgid,int _sp,int _step,float[][][] _n,float[][][] _l,float[]
 				t=0;
 			}
 			sum+=t;
-			System.out.println("LResSG:"+j+","+_sgid+":"+R(_sgid,_sp,_step,_n,_l,_s,V,W)*W[j][_sgid]);
+			System.out.println("LResSG:"+j+","+_sgid+":"+t);//LOGGING t
 		}
 		res=sum;
 		//NOTE:This block is for terminating based on sum of residuals being less than 1
