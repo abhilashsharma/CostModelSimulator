@@ -1,20 +1,17 @@
 package Testing.Testing;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import org.apache.hadoop.hbase.util.*;
 
-import org.apache.hadoop.io.BytesWritable;
-import org.apache.hadoop.io.LongWritable;
-
-import com.google.gson.*;
+import com.google.common.primitives.Longs;
 
 import in.dream_lab.goffish.godb.Path;
+import it.unimi.dsi.fastutil.longs.LongArrayList;
 
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-import com.google.common.primitives.Ints;
-import com.google.common.primitives.Longs;
+
 
 /**
  * Hello world!
@@ -108,38 +105,60 @@ public class App
 //    	test[3]=new Long(9);
 //    	
 //    	Byte[] b= new Byte[8];
+//    	//THIS is profiler measurement of memory
+//    	LinkedList<VertexMessageSteps> nextStepForwardLocalVertexList = new LinkedList<VertexMessageSteps>();
+////    	List<VertexMessageSteps> ForwardLocalVertexList = new ArrayList<VertexMessageSteps>();
+////    	VertexMessageSteps v=new VertexMessageSteps(1l,1234567l, "" ,3, 987623l,2, 19l, 0);
+////    	VertexMessageSteps vs=new VertexMessageSteps(1l,1234567l, "" ,3, 987623l,2, 19l, 0);
+////    	System.out.println("HopSize:" + ObjectSizeFetcher.getObjectSize(vnull));
+//    	int count=0;
+////    	VertexMessageSteps vnull=new VertexMessageSteps(null,null,null,null,null,null,null,null);
+//    	while(count < 1000000) {
+//    		if(count%1000==0) {
+////    			long size=ObjectSizeFetcher.getObjectSize(ForwardLocalVertexList);
+////    			System.out.println("ListSize:" + count + "," + size);
+//    		}
+//    		Path p=new Path(12397l);
+//    		p.addEV(23423l, 23478633l);
+//    		p.addEV(23423l, 23478633l);
+//    		p.addEV(23423l, 23478633l);
+//    		p.addEV(23423l, 23478633l);
+//    		VertexMessageSteps v=new VertexMessageSteps(1l,1234567l, p ,3, 987623l,2, 19l, 0);
+//    		nextStepForwardLocalVertexList.add(v);
+//    		count++;
+//    	}
+//    	
+////    String s1="";
+////    String s2="aaaaaaaaaaaaaaaaa";
+////    String[] s3= {"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","sdfsdfsd","sdfsdfsdfds","asdasdasdasd","sdfsdfsdfsd" , "asfasdasdasd","sdfsdfsdfsdfsda"};
+////    System.out.println("s1:"+ObjectSizeFetcher.getObjectSize(s1));	
+////    System.out.println("s2:"+ObjectSizeFetcher.getObjectSize(s2));
+////    System.out.println("s3:"+ObjectSizeFetcher.getObjectSize(s3));
+//    	System.out.println("Done");
+//    	while(true) {
+//    	
+//    	}
+//    	String line="1@2%3|";
+//    	String[] data =line.split("\\W");
+//    	String test="l";
+//    	
+//    	System.out.println(test.substring(0, test.length() - 1).equals(""));
+    	Splitter splitter=Splitter.createSplitter();
+        String Val="1#234@2134234#234#";
+        byte[] test=Val.getBytes();
+        
+        long start=System.nanoTime();
+        LongArrayList sList=splitter.splitLong(test);
+        System.out.println("Splitter Time:" + (System.nanoTime()-start));
+       
     	
-    	LinkedList<VertexMessageSteps> nextStepForwardLocalVertexList = new LinkedList<VertexMessageSteps>();
-//    	List<VertexMessageSteps> ForwardLocalVertexList = new ArrayList<VertexMessageSteps>();
-//    	VertexMessageSteps v=new VertexMessageSteps(1l,1234567l, "" ,3, 987623l,2, 19l, 0);
-//    	VertexMessageSteps vs=new VertexMessageSteps(1l,1234567l, "" ,3, 987623l,2, 19l, 0);
-//    	System.out.println("HopSize:" + ObjectSizeFetcher.getObjectSize(vnull));
-    	int count=0;
-//    	VertexMessageSteps vnull=new VertexMessageSteps(null,null,null,null,null,null,null,null);
-    	while(count < 1000000) {
-    		if(count%1000==0) {
-//    			long size=ObjectSizeFetcher.getObjectSize(ForwardLocalVertexList);
-//    			System.out.println("ListSize:" + count + "," + size);
-    		}
-    		Path p=new Path(12397l);
-    		p.addEV(23423l, 23478633l);
-    		p.addEV(23423l, 23478633l);
-    		p.addEV(23423l, 23478633l);
-    		p.addEV(23423l, 23478633l);
-    		VertexMessageSteps v=new VertexMessageSteps(1l,1234567l, p ,3, 987623l,2, 19l, 0);
-    		nextStepForwardLocalVertexList.add(v);
-    		count++;
-    	}
+        start=System.nanoTime();
+        String[] tokens= Val.split("\\W");
+        LongArrayList l=new LongArrayList();
+        for(String t:tokens) {
+        	l.add(Long.parseLong(t));
+        }
+        System.out.println("String Time:" + (System.nanoTime()-start));
     	
-//    String s1="";
-//    String s2="aaaaaaaaaaaaaaaaa";
-//    String[] s3= {"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","sdfsdfsd","sdfsdfsdfds","asdasdasdasd","sdfsdfsdfsd" , "asfasdasdasd","sdfsdfsdfsdfsda"};
-//    System.out.println("s1:"+ObjectSizeFetcher.getObjectSize(s1));	
-//    System.out.println("s2:"+ObjectSizeFetcher.getObjectSize(s2));
-//    System.out.println("s3:"+ObjectSizeFetcher.getObjectSize(s3));
-    	System.out.println("Done");
-    	while(true) {
-    	
-    	}
     }
 }
