@@ -106,6 +106,9 @@ public static void main(String[] args) throws IOException{
 			String[] data=line.split("\\s+");
 			String[] propData=data[0].split(",");
 			String propName=propertyMapping.get(propData[0]);
+			if(propName.equals("vid")) {
+				continue;
+			}
 			String value=propData[1];
 			String[] statsData=data[1].split(",");
 			long vertexCount=Long.valueOf(statsData[0]);
