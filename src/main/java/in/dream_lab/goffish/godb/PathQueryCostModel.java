@@ -372,29 +372,30 @@ public class PathQueryCostModel{
                                                                     Double avgDeg = new Double(0);
                                                                     Double avgRemoteDeg = new Double(0);
                                                                     Step nextStep = It.next();
-                                                                    if(nextStep.direction == Step.Direction.OUT){
-                                                                            if ( currentStep.property == null) {
-                                                                                    avgDeg = hueristics.numEdges/hueristics.numVertices;
-                                                                                    avgRemoteDeg = hueristics.numRemoteVertices/(hueristics.numVertices+hueristics.numRemoteVertices) * avgDeg;
-                                                                                    //System.out.println("AVGDEG:" +avgDeg + "REMOTEAVGDEG:" + avgRemoteDeg);
-                                                                            }       
-                                                                            else { 
-                                                                                    avgDeg = hueristics.vertexPredicateMap.get(currentStep.property).get(currentStep.value.toString()).avgOutDegree; 
-                                                                                    avgRemoteDeg = hueristics.vertexPredicateMap.get(currentStep.property).get(currentStep.value.toString()).avgRemoteOutDegree;
-//                                                                                    System.out.println("AVGDEG:" +avgDeg + "REMOTEAVGDEG:" + avgRemoteDeg);
-                                                                            }       
-                                                                    }else if(nextStep.direction == Step.Direction.IN){
-                                                                            if ( currentStep.property == null) {
-                                                                                    avgDeg = hueristics.numEdges/hueristics.numVertices;
-                                                                                    avgRemoteDeg = hueristics.numRemoteVertices/(hueristics.numVertices+hueristics.numRemoteVertices) * avgDeg;
-                                                                                    //System.out.println("AVGDEG:" +avgDeg + "REMOTEAVGDEG:" + avgRemoteDeg);
-                                                                            }       
-                                                                            else { 
-                                                                                    avgDeg = hueristics.vertexPredicateMap.get(currentStep.property).get(currentStep.value.toString()).avgInDegree;
-                                                                                    avgRemoteDeg = hueristics.vertexPredicateMap.get(currentStep.property).get(currentStep.value.toString()).avgRemoteInDegree;
-                                                                                    //System.out.println("AVGDEG:" +avgDeg + "REMOTEAVGDEG:" + avgRemoteDeg);
-                                                                            }               
-                                                                    }
+                                                                    if(nextStep.direction == Direction.OUT){
+                                                                        if ( currentStep.property == null) {
+                                                                                avgDeg=hueristics.avgDeg(null, null,true,true );
+                                                                                avgRemoteDeg=hueristics.avgRemoteDeg(null,null, true,true);
+//                                                                                System.out.println("AVGDEG:" +avgDeg + "REMOTEAVGDEG:" + avgRemoteDeg);
+                                                                        } else {
+                                                                                avgDeg=hueristics.avgDeg(currentStep.property, currentStep.value.toString(),true,true );
+                                                                                avgRemoteDeg=hueristics.avgRemoteDeg(currentStep.property, currentStep.value.toString(), true,true);
+//                                                                                System.out.println("AVGDEG:" +avgDeg + "REMOTEAVGDEG:" + avgRemoteDeg);
+                                                                        }
+                                                                                
+                                                                        
+                                                                }else if(nextStep.direction == Direction.IN){
+                                                                        if ( currentStep.property == null) {
+                                                                                avgDeg=hueristics.avgDeg(null,null,false,true );
+                                                                                avgRemoteDeg=hueristics.avgRemoteDeg(null,null, false,true);
+//                                                                                System.out.println("AVGDEG:" +avgDeg + "REMOTEAVGDEG:" + avgRemoteDeg);
+                                                                        } else {
+                                                                                avgDeg=hueristics.avgDeg(currentStep.property, currentStep.value.toString(),false,true );
+                                                                                avgRemoteDeg=hueristics.avgRemoteDeg(currentStep.property, currentStep.value.toString(), false,true);
+//                                                                                System.out.println("AVGDEG:" +avgDeg + "REMOTEAVGDEG:" + avgRemoteDeg);
+                                                                        }
+                                                                        
+                                                                }
                                                                     resultSetNumber *= (avgDeg+avgRemoteDeg); 
                                                                     Double eScanCost = prevScanCost * probability * avgDeg;
                                                                     Double networkCost = new Double(0);
