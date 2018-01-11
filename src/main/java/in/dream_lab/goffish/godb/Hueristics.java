@@ -38,8 +38,10 @@ public class Hueristics implements Serializable,IGraphStatistics{
 	
 	public double avgDeg(String property,String value,boolean direction,boolean forORrev){
 		
-		if(property.equals("vid")) {
-			return numEdges/numVertices;
+		if(property!=null) {
+			if(property.equals("vid")) {
+				return numEdges/numVertices;
+			}
 		}
 		
 		if(forORrev==true){
@@ -95,8 +97,10 @@ public class Hueristics implements Serializable,IGraphStatistics{
 	
 	public double avgRemoteDeg(String property,String value,boolean direction,boolean forORrev){
 		double avgdeg=avgDeg(null,null,true,true);
-		if(property.equals("vid")) {
-			return this.numRemoteVertices/(this.numVertices+this.numRemoteVertices)* avgdeg;
+		if(property!=null) {
+			if(property.equals("vid")) {
+				return this.numRemoteVertices/(this.numVertices+this.numRemoteVertices)* avgdeg;
+			}
 		}
 		if(forORrev==true){
 			
