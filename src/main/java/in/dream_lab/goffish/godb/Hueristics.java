@@ -19,12 +19,15 @@ public class Hueristics implements Serializable,IGraphStatistics{
 	}
 	
 	public double probabilityOfVertex(String property,String value){
+		if(property!=null) {
+			if(property.equals("vid")) {
+				return ((double)1)/numVertices;
+			}
+		}
 		if(this.vertexPredicateMap.get(property)==null){
 			return -1;
 		}
-		if(property.equals("vid")) {
-			return ((double)1)/numVertices;
-		}
+		
 		return this.vertexPredicateMap.get(property).get(value).probability;
 	}
 	
