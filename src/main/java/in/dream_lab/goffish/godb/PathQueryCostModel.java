@@ -55,6 +55,8 @@ import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
 
+import in.dream_lab.goffish.godb.Step.Direction;
+
 
 
 
@@ -322,7 +324,297 @@ public class PathQueryCostModel{
         
 
     
-        
+        public static void computeNWFixedHeu() {
+
+            
+            // RUNTIME FUNCTIONALITITES 
+            {
+                   
+                           
+                            // COMPUTE HUERISTIC BASED QUERY COST
+                            {
+                                    // TODO: implementation for calc cost from middle of query ( for each position calc cost forward and backward cost and add them)
+                                    
+                                    for (int pos = 0;pos < path.size() ; pos+=2 ){
+                                            Double joinCost = new Double(0);
+                                            //forward cost
+                                            {       
+                                                    Double totalCost = new Double(0);
+                                                    Double prevScanCost = hueristics.numVertices;
+                                                    Double resultSetNumber = hueristics.numVertices;
+                                                    ListIterator<Step> It = path.listIterator(pos);
+                                                    //Iterator<Step> It = path.iterator();
+                                                    Step currentStep = It.next();
+                                                    
+                                                    while(It.hasNext()){
+                                                            //cost calc
+                                                            // TODO: make cost not count in probability when no predicate on edge/vertex
+                                                            {
+                                                                    Double probability = null;
+                                                                    
+                                                                    if ( currentStep.property == null )
+                                                                            probability = new Double(1);
+                                                                    else {
+                                                                  	  	if(currentStep.property.equals("vid")) {
+                                                                  	  		probability = hueristics.probabilityOfVertex(currentStep.property, currentStep.value.toString());
+                                                                  	  	}
+                                 
+                                                                  	  	else if ( hueristics.vertexPredicateMap.get(currentStep.property).containsKey(currentStep.value.toString()) ){
+                                                                                    probability = hueristics.vertexPredicateMap.get(currentStep.property).get(currentStep.value.toString()).probability;
+                                                                                    //System.out.println("Vertex Probability:" + probability);
+                                                                            }       
+                                                                            else {
+                                                                                    totalCost = new Double(-1);
+                                                                                    break;
+                                                                            }
+                                                                    }
+                                                                    resultSetNumber *= probability;
+                                                                    Double avgDeg = new Double(0);
+                                                                    Double avgRemoteDeg = new Double(0);
+                                                                    Step nextStep = It.next();
+                                                                    if(nextStep.direction == Step.Direction.OUT){
+                                                                            if ( currentStep.property == null) {
+                                                                                    avgDeg = hueristics.numEdges/hueristics.numVertices;
+                                                                                    avgRemoteDeg = hueristics.numRemoteVertices/(hueristics.numVertices+hueristics.numRemoteVertices) * avgDeg;
+                                                                                    //System.out.println("AVGDEG:" +avgDeg + "REMOTEAVGDEG:" + avgRemoteDeg);
+                                                                            }       
+                                                                            else { 
+                                                                                    avgDeg = hueristics.vertexPredicateMap.get(currentStep.property).get(currentStep.value.toString()).avgOutDegree; 
+                                                                                    avgRemoteDeg = hueristics.vertexPredicateMap.get(currentStep.property).get(currentStep.value.toString()).avgRemoteOutDegree;
+//                                                                                    System.out.println("AVGDEG:" +avgDeg + "REMOTEAVGDEG:" + avgRemoteDeg);
+                                                                            }       
+                                                                    }else if(nextStep.direction == Step.Direction.IN){
+                                                                            if ( currentStep.property == null) {
+                                                                                    avgDeg = hueristics.numEdges/hueristics.numVertices;
+                                                                                    avgRemoteDeg = hueristics.numRemoteVertices/(hueristics.numVertices+hueristics.numRemoteVertices) * avgDeg;
+                                                                                    //System.out.println("AVGDEG:" +avgDeg + "REMOTEAVGDEG:" + avgRemoteDeg);
+                                                                            }       
+                                                                            else { 
+                                                                                    avgDeg = hueristics.vertexPredicateMap.get(currentStep.property).get(currentStep.value.toString()).avgInDegree;
+                                                                                    avgRemoteDeg = hueristics.vertexPredicateMap.get(currentStep.property).get(currentStep.value.toString()).avgRemoteInDegree;
+                                                                                    //System.out.println("AVGDEG:" +avgDeg + "REMOTEAVGDEG:" + avgRemoteDeg);
+                                                                            }               
+                                                                    }
+                                                                    resultSetNumber *= (avgDeg+avgRemoteDeg); 
+                                                                    Double eScanCost = prevScanCost * probability * avgDeg;
+                                                                    Double networkCost = new Double(0);
+                                                                    Double vScanCost = new Double(0);
+                                                                    if(nextStep.property == null){
+                                                                            vScanCost = eScanCost;
+                                                                            networkCost = networkCoeff * prevScanCost * probability * avgRemoteDeg;
+//                                                                            System.out
+//                                                                                .println("Network:"+ prevScanCost + "," + probability + "," + avgRemoteDeg);
+                                                                    }
+                                                                    else {
+                                                                            //output(partition.getId(), subgraph.getId(),nextStep.property);
+                                                                            //output(partition.getId(), subgraph.getId(),nextStep.value.toString());
+                                                                            //output(partition.getId(), subgraph.getId(),String.valueOf(hueristics.edgePredicateMap.size()));
+                                                                            //output(partition.getId(), subgraph.getId(),String.valueOf(pos));
+                                                                            //output(partition.getId(), subgraph.getId(),hueristics.edgePredicateMap.get(nextStep.property).get(nextStep.value.toString()).probability.toString());
+                                                                            //System.out.println(nextStep.property+":"+nextStep.value);
+                                                                            if ( hueristics.edgePredicateMap.get(nextStep.property).containsKey(nextStep.value.toString()) ) {
+                                                                                    vScanCost = eScanCost * hueristics.edgePredicateMap.get(nextStep.property).get(nextStep.value.toString()).probability;
+                                                                                    networkCost = networkCoeff * prevScanCost * probability * avgRemoteDeg * hueristics.edgePredicateMap.get(nextStep.property).get(nextStep.value.toString()).probability;
+                                                                                    resultSetNumber *= hueristics.edgePredicateMap.get(nextStep.property).get(nextStep.value.toString()).probability;
+                                                                                    //System.out.println("Edge:" + hueristics.edgePredicateMap.get(nextStep.property).get(nextStep.value.toString()).probability);
+                                                                            }
+                                                                            else {
+                                                                                    totalCost = new Double(-1);
+                                                                                    break;
+                                                                            }
+                                                                    }
+                                                                    totalCost += (eScanCost+vScanCost+networkCost);
+                                                                    prevScanCost = vScanCost;
+                                                                    currentStep = It.next();
+                                                            }       
+                                                                                            
+                                                    }
+                                                    joinCost += resultSetNumber;
+                                                    if(pos==0 || pos == (path.size()-1)){
+                                                      joinCost=0.0;
+                                                    }
+                                                    queryCostHolder[pos] = totalCost;
+                                                    
+//                                                  System.out.println(pos+":"+"for:"+String.valueOf(totalCost));
+                                            }
+                                            //reverse cost
+                                            {
+                                                    Double totalCost = new Double(0);
+                                                    Double prevScanCost = hueristics.numVertices;
+                                                    Double resultSetNumber = hueristics.numVertices;
+
+                                                    ListIterator<Step> revIt = path.listIterator(pos+1);
+                                                    Step currentStep = revIt.previous();
+                                                    while(revIt.hasPrevious()){
+                                                            // TODO: make cost not count in probability when no predicate on edge/vertex
+                                                            {
+                                                                    Double probability = null;
+                                                                    if ( currentStep.property == null )
+                                                                            probability = new Double(1);
+                                                                    else {
+                                                                    	if(currentStep.property.equals("vid")) {
+                                                              	  		probability = hueristics.probabilityOfVertex(currentStep.property, currentStep.value.toString());
+                                                              	  	}
+                             
+                                                              	  	else
+                                                                            if ( hueristics.vertexPredicateMap.get(currentStep.property).containsKey(currentStep.value.toString()) )
+                                                                                    probability = hueristics.vertexPredicateMap.get(currentStep.property).get(currentStep.value.toString()).probability;
+                                                                            else {
+                                                                                    totalCost = new Double(-1);
+                                                                                    break;
+                                                                            }
+                                                                    }
+                                                                    resultSetNumber *= probability;
+                                                                    Double avgDeg = new Double(0);
+                                                                    Double avgRemoteDeg = new Double(0);
+                                                                    Step nextStep = revIt.previous();
+                                                                    if(nextStep.direction == Direction.OUT){
+                                                                        if ( currentStep.property == null) {
+                                                                                avgDeg=hueristics.avgDeg(null,null ,true,false );
+                                                                                avgRemoteDeg=hueristics.avgRemoteDeg(null, null, true,false);
+                                                                        }else{
+                                                                                avgDeg=hueristics.avgDeg(currentStep.property, currentStep.value.toString(),true,false );
+                                                                                avgRemoteDeg=hueristics.avgRemoteDeg(currentStep.property, currentStep.value.toString(), true,false);
+                                                                                
+                                                                        }
+                                                                        
+                                                                }else if(nextStep.direction == Direction.IN){
+                                                                        if ( currentStep.property == null) {
+                                                                                avgDeg=hueristics.avgDeg(null,null,false,false );
+                                                                                avgRemoteDeg=hueristics.avgRemoteDeg(null,null, false,false);
+                                                                        }else {
+                                                                                avgDeg=hueristics.avgDeg(currentStep.property, currentStep.value.toString(),false,false );
+                                                                                avgRemoteDeg=hueristics.avgRemoteDeg(currentStep.property, currentStep.value.toString(), false,false);
+                                                                        }
+                                                                        
+                                                                }
+                                                                    resultSetNumber *= (avgDeg+avgRemoteDeg);
+                                                                    Double eScanCost = prevScanCost * probability * avgDeg;
+                                                                    Double vScanCost = new Double(0);
+                                                                    Double networkCost = new Double(0);
+                                                                    if(nextStep.property == null){
+                                                                            vScanCost = eScanCost;
+                                                                            networkCost = networkCoeff * prevScanCost * probability * avgRemoteDeg;
+                                                                    }
+                                                                    else {
+                                                                            if ( hueristics.edgePredicateMap.get(nextStep.property).containsKey(nextStep.value.toString()) ) {
+                                                                                    vScanCost = eScanCost * hueristics.edgePredicateMap.get(nextStep.property).get(nextStep.value.toString()).probability;
+                                                                                    networkCost = networkCoeff * prevScanCost * probability * avgRemoteDeg * hueristics.edgePredicateMap.get(nextStep.property).get(nextStep.value.toString()).probability;
+                                                                                    resultSetNumber *= hueristics.edgePredicateMap.get(nextStep.property).get(nextStep.value.toString()).probability;
+                                                                            }
+                                                                            else {
+                                                                                    totalCost = new Double(-1);
+                                                                                    break;
+                                                                            }
+                                                                    }
+                                                                    totalCost += (eScanCost+vScanCost +networkCost);
+                                                                    prevScanCost = vScanCost;
+                                                                    currentStep = revIt.previous();
+                                                            }
+                                                    }
+                                                    joinCost *= joinCoeff*resultSetNumber;
+                                                    if ( queryCostHolder[pos] != -1 && totalCost != -1) {
+                                                            queryCostHolder[pos] += totalCost;
+                                                            if (pos!=0 && pos!= path.size()-1)
+                                                                    queryCostHolder[pos] += joinCost;
+                                                    }
+                                                    else
+                                                            queryCostHolder[pos] = new Double(-1);
+                                                    
+                                            }
+                                            /* add that extra cost of initial scan*/
+                                            //TODO: Add 1 when indexed
+                                            initDone=true;//done to make it simulate like query is using indexes
+                                            if ( queryCostHolder[pos] != -1 )
+                                            {
+                                                    if(!initDone)
+                                                            queryCostHolder[pos] += hueristics.numVertices;
+                                                    else
+                                                            queryCostHolder[pos] +=hueristics.numVertices*indexCoeff;
+                                                            
+                                            }
+//                                          System.out.println(pos+":Total:"+String.valueOf(queryCostHolder[pos]));
+                                    }
+                                     
+                            }
+                            
+                            
+                            
+                            
+                            // LOAD START VERTICES
+                            {
+                                   
+                                    int startPos=0;
+                                    Double minCost = queryCostHolder[startPos];
+                                    boolean queryPossible = true;
+                                    String AllCostsStrings="";
+                                    for (int i = 0; i < queryCostHolder.length ; i+=2) {//changed from i++ to i+=2
+                                            if(AllCostsStrings.equals("")){
+                                              AllCostsStrings=queryCostHolder[i].toString();
+                                            }
+                                            else{
+                                              AllCostsStrings+="," + queryCostHolder[i];
+                                            }
+                                            
+                                            if ( queryCostHolder[i]!=0 && queryCostHolder[i]!=-1 && queryCostHolder[i] < minCost ){
+                                                    minCost=queryCostHolder[i];
+                                                    startPos = i;
+                                            }
+                                            if( queryCostHolder[i]==-1 )
+                                                    queryPossible = false;
+                                    }
+                                    
+                                    String currentProperty = null;
+                                    Object currentValue = null;
+//                                  startPos=0;//used for debugging
+                                    currentProperty = path.get(startPos).property; 
+                                    currentValue = path.get(startPos).value;
+                                    
+                                    // TODO: check if the property is indexed** uncomment this if using indexes
+                                    long QueryId=getQueryId();
+                                   
+                                            
+                                  System.out.println("Starting Position:" + startPos +"  Query min Cost:" + minCost + "   Path Size:" + path.size());
+                                  System.out.println("AllCosts:" + AllCostsStrings);
+//                                  System.out.println("*******Querying done********:"+hits.length);
+                                    
+                                           
+                                    
+            
+                                    // TODO : else iteratively check for satisfying vertices
+//                                  if ( queryPossible == true )
+//                                  for(IVertex<MapWritable, MapWritable, LongWritable, LongWritable> vertex: getSubgraph().getLocalVertices()) {
+//                                          if ( vertex.isRemote() ) continue;
+//                                          
+//                                          if ( compareValuesUtil(vertex.getValue().get(new Text(currentProperty)).toString(), currentValue.toString()) ) {
+//                                                  String _message = "V:"+String.valueOf(vertex.getVertexId().get());
+//                                                  System.out.println("Vertex id:" + vertex.getVertexId().get() + "Property:"+currentProperty +" Value:" + vertex.getValue().get(new Text(currentProperty)).toString());
+//                                                  if ( startPos == 0)
+//                                                          forwardLocalVertexList.add( new VertexMessageSteps(QueryId,vertex.getVertexId().get(),_message, startPos, vertex.getVertexId().get(),startPos, getSubgraph().getSubgraphId().get(), 0) );
+//                                                  else
+//                                                  if( startPos == (path.size()-1))
+//                                                          revLocalVertexList.add( new VertexMessageSteps(QueryId,vertex.getVertexId().get(),_message, startPos , vertex.getVertexId().get(),startPos, getSubgraph().getSubgraphId().get(), 0) );
+//                                                  else{
+//                                                          forwardLocalVertexList.add( new VertexMessageSteps(QueryId,vertex.getVertexId().get(),_message, startPos, vertex.getVertexId().get(),startPos, getSubgraph().getSubgraphId().get(), 0) );
+//                                                          revLocalVertexList.add( new VertexMessageSteps(QueryId,vertex.getVertexId().get(),_message, startPos , vertex.getVertexId().get(),startPos, getSubgraph().getSubgraphId().get(), 0) );
+//                                                  }
+//                                                  //output(partition.getId(), subgraph.getId(), subgraphProperties.getValue(currentProperty).toString());
+//                                          }
+//                                  }
+                                    
+                                    
+                                    
+                            }
+                            
+                    
+                    
+                    
+
+            }
+            
+            
+    
+        }
         
 
 
@@ -369,7 +661,11 @@ public class PathQueryCostModel{
                                                                   if ( currentStep.property == null )
                                                                           probability = new Double(1);
                                                                   else {
-                                                                          if ( hueristics.vertexPredicateMap.get(currentStep.property).containsKey(currentStep.value.toString()) ){
+                                                                	  	if(currentStep.property.equals("vid")) {
+                                                                	  		probability = hueristics.probabilityOfVertex(currentStep.property, currentStep.value.toString());
+                                                                	  	}
+                               
+                                                                	  	else if ( hueristics.vertexPredicateMap.get(currentStep.property).containsKey(currentStep.value.toString()) ){
                                                                                   probability = hueristics.vertexPredicateMap.get(currentStep.property).get(currentStep.value.toString()).probability;
                                                                                   //System.out.println("Vertex Probability:" + probability);
                                                                           }       
@@ -1188,7 +1484,7 @@ public static void main(String[] args){
             Args=sCurrentLine;
             System.out.println(Args);
             init(Args);
-            computeNWFixed();
+            computeNWFixedHeu();
             clear();  
     }
     br.close();
