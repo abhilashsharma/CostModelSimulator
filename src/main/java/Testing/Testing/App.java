@@ -143,22 +143,25 @@ public class App
 //    	String test="l";
 //    	
 //    	System.out.println(test.substring(0, test.length() - 1).equals(""));
-    	Splitter splitter=Splitter.createSplitter();
-        String Val="1#234@2134234#234#";
-        byte[] test=Val.getBytes();
-        
-        long start=System.nanoTime();
-        LongArrayList sList=splitter.splitLong(test);
-        System.out.println("Splitter Time:" + (System.nanoTime()-start));
-       
-    	
-        start=System.nanoTime();
-        String[] tokens= Val.split("\\W");
-        LongArrayList l=new LongArrayList();
-        for(String t:tokens) {
-        	l.add(Long.parseLong(t));
-        }
-        System.out.println("String Time:" + (System.nanoTime()-start));
-    	
+//    	Splitter splitter=Splitter.createSplitter();
+//        String Val="1#234@2134234#234#";
+//        byte[] test=Val.getBytes();
+//        
+//        long start=System.nanoTime();
+//        LongArrayList sList=splitter.splitLong(test);
+//        System.out.println("Splitter Time:" + (System.nanoTime()-start));
+//       
+//    	
+//        start=System.nanoTime();
+//        String[] tokens= Val.split("\\W");
+//        LongArrayList l=new LongArrayList();
+//        for(String t:tokens) {
+//        	l.add(Long.parseLong(t));
+//        }
+//        System.out.println("String Time:" + (System.nanoTime()-start));
+    	String s="2";
+    	String[] data =s.split("\\s+");
+    	for(String v:data)
+    	System.out.println("Data:" + v);
     }
 }

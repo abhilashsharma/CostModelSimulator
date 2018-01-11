@@ -22,6 +22,9 @@ public class Hueristics implements Serializable,IGraphStatistics{
 		if(this.vertexPredicateMap.get(property)==null){
 			return -1;
 		}
+		if(property.equals("vid")) {
+			return ((double)1)/numVertices;
+		}
 		return this.vertexPredicateMap.get(property).get(value).probability;
 	}
 	
@@ -35,9 +38,12 @@ public class Hueristics implements Serializable,IGraphStatistics{
 	
 	public double avgDeg(String property,String value,boolean direction,boolean forORrev){
 		
+		if(property.equals("vid")) {
+			return numEdges/numVertices;
+		}
+		
 		if(forORrev==true){
 			
-		
 		if(direction == true){
 			if ( property == null) {
 				return this.numEdges/this.numVertices;
@@ -89,6 +95,9 @@ public class Hueristics implements Serializable,IGraphStatistics{
 	
 	public double avgRemoteDeg(String property,String value,boolean direction,boolean forORrev){
 		double avgdeg=avgDeg(null,null,true,true);
+		if(property.equals("vid")) {
+			return this.numRemoteVertices/(this.numVertices+this.numRemoteVertices)* avgdeg;
+		}
 		if(forORrev==true){
 			
 		if(direction == true){

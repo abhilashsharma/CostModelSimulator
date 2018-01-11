@@ -412,8 +412,8 @@ public class PathQueryCostModel{
                                                                   if(nextStep.property == null){
                                                                           vScanCost = eScanCost;
                                                                           networkCost = networkCoeff * prevScanCost * probability * avgRemoteDeg;
-                                                                          System.out
-                                                                              .println("Network:"+ prevScanCost + "," + probability + "," + avgRemoteDeg);
+//                                                                          System.out
+//                                                                              .println("Network:"+ prevScanCost + "," + probability + "," + avgRemoteDeg);
                                                                   }
                                                                   else {
                                                                           //output(partition.getId(), subgraph.getId(),nextStep.property);
@@ -1150,7 +1150,7 @@ public class PathQueryCostModel{
         
 static void LoadHeuristics(){
   try{/*Directly reading the gathered heuristics*/
-    FileInputStream fis = new FileInputStream("/home/abhilash/abhilash/heuristics/hue_FULL.ser"); 
+    FileInputStream fis = new FileInputStream("/home/abhilash/abhilash/RGraph/hue_FULL.ser"); 
     ObjectInputStream ois = new ObjectInputStream(fis);
     hueristics = (Hueristics)ois.readObject();
     ois.close();
