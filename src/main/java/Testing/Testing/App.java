@@ -10,6 +10,7 @@ import com.google.common.primitives.Longs;
 
 import in.dream_lab.goffish.godb.Path;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
 
 
@@ -144,12 +145,17 @@ public class App
 //    	
 //    	System.out.println(test.substring(0, test.length() - 1).equals(""));
 //    	Splitter splitter=Splitter.createSplitter();
-//        String Val="1#234@2134234#234#";
-//        byte[] test=Val.getBytes();
-//        
+//        String Val="1#234@2%edge1:edge2:edge3|";
+//        byte[] record=Val.getBytes();
+////        
 //        long start=System.nanoTime();
-//        LongArrayList sList=splitter.splitLong(test);
+//        LongArrayList tokens=splitter.splitLong(record);
 //        System.out.println("Splitter Time:" + (System.nanoTime()-start));
+//        System.out.println(tokens.toString());
+//        for(int i=3; i < 3 + tokens.get(2); i++) 
+//            System.out.println("Local:"+tokens.get(i));
+//        for(int i=(int) (3 + tokens.get(2)); i < tokens.size(); i++)
+//        	System.out.println("remote:" + tokens.get(i));
 //       
 //    	
 //        start=System.nanoTime();
@@ -159,9 +165,14 @@ public class App
 //        	l.add(Long.parseLong(t));
 //        }
 //        System.out.println("String Time:" + (System.nanoTime()-start));
-    	String s="2";
-    	String[] data =s.split("\\s+");
-    	for(String v:data)
-    	System.out.println("Data:" + v);
+//    	String s="2";
+//    	String[] data =s.split("\\s+");
+//    	for(String v:data)
+//    	System.out.println("Data:" + v);
+    	String adjList="abcde|";
+//    	String finalAdjString = adjList.toString().substring(0,adjList.toString().length()-1);
+    	String[] data=adjList.split("\\W");
+    	for(String v: data)
+    		System.out.println(v);
     }
 }

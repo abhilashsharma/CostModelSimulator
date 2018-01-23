@@ -85,11 +85,12 @@ public static void main(String[] args) throws IOException{
 	FileReader fr = null;
  	FileOutputStream fos;
 	ObjectOutputStream oos;
+	//"employer", "school"," major","places_lived"
 	propertyMapping.put("0","vid");
-	propertyMapping.put("1","lang");
-	propertyMapping.put("2","ind");
-	propertyMapping.put("3","contr");
-	propertyMapping.put("4","ispublic");
+	propertyMapping.put("1","employer");
+	propertyMapping.put("2","school");
+	propertyMapping.put("3","major");
+	propertyMapping.put("4","places_lived");
 	
 	
 	try {
@@ -147,7 +148,7 @@ public static void main(String[] args) throws IOException{
 	
 	System.out.println("Writing heuristic object:" + heuristicsBasePath+String.valueOf("Hue_FULL")+".ser");
 	//store in file
-	File file = new File(heuristicsBasePath+String.valueOf("Hue_FULL")+".ser");
+	File file = new File(heuristicsBasePath+String.valueOf("gplusHue_FULL")+".ser");
 	if ( !file.exists() ) {
 		
 		file.getParentFile().mkdirs();
