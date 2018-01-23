@@ -107,11 +107,15 @@ public static void main(String[] args) throws IOException{
 			System.out.println(line);
 			String[] data=line.split("\\s+");
 			String[] propData=data[0].split(",");
+			String propVal="";
+			if(propData.length>1) {
+				propVal=propData[1];
+			}
 			String propName=propertyMapping.get(propData[0]);
 			if(propName.equals("vid")) {
 				continue;
 			}
-			String value=propData[1];
+			String value=propVal;
 			String[] statsData=data[1].split(",");
 			long vertexCount=Long.valueOf(statsData[0]);
 			long localOutEdgeCount=Long.valueOf(statsData[1]);
