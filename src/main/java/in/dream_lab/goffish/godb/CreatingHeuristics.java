@@ -104,7 +104,7 @@ public static void main(String[] args) throws IOException{
 		String line;
 
 		while ((line = br.readLine()) != null) {
-			System.out.println(line);
+//			System.out.println(line);
 			String[] data=line.split("\\s+");
 			String[] propData=data[0].split(",");
 			String propVal="";
