@@ -1330,9 +1330,9 @@ static int N(int _sgid,int _sp,int _step,int[][][] _n) {
 }
         
         
-static void LoadHeuristics(){
+static void LoadHeuristics(String heuPath){
   try{/*Directly reading the gathered heuristics*/
-    FileInputStream fis = new FileInputStream("/home/abhilash/abhilash/heuristics/hue_FULL.ser"); 
+    FileInputStream fis = new FileInputStream(heuPath); 
     ObjectInputStream ois = new ObjectInputStream(fis);
     hueristics = (Hueristics)ois.readObject();
     ois.close();
@@ -1353,7 +1353,8 @@ public static void main(String[] args){
 //  System.out.println("Network Coeff:"+ networkCoeff);
 //  System.out.println("Join Coeff:" + joinCoeff);
 //  System.out.println("Index Coeff:" + indexCoeff);
-  LoadHeuristics();
+	String heuPath=args[1];
+  LoadHeuristics(heuPath);
   System.out.println("Completed Loading of heuristics");
 //  String queryStr="patid:string[4837891]@out?@patid:string[3287759]//0//163";
   String Args="";
