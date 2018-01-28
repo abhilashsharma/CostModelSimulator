@@ -654,9 +654,13 @@ public static void main(String[] args){
   
  HashSet<String> vertexProperties=new HashSet<String>();
 // vertexProperties.add("patid");
- vertexProperties.add("nclass");
- vertexProperties.add("country");
+// vertexProperties.add("nclass");
+// vertexProperties.add("country");
  
+ vertexProperties.add("employer");
+ vertexProperties.add("school");
+ vertexProperties.add("major");
+ vertexProperties.add("places_lived");
  
  Iterator it=vertexProperties.iterator();
  
@@ -667,8 +671,8 @@ public static void main(String[] args){
    for( Entry<String, vertexPredicateStats> pair:map.entrySet()){
      String key=pair.getKey().toString();
      Double value=pair.getValue().numberMatchingPredicate;
-     if(value < 1000){
-       System.out.println("Property:" + prop + " Value:" + key + " Match:" + value );
+     if(value < 2000){
+       System.out.println("Property:" + prop + ":Value:" + key + ":Match:" + value );
      }
      
    }
