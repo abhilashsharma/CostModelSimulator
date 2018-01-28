@@ -630,9 +630,9 @@ public class FindStartingPoints{
         }
         
         
-static void LoadHeuristics(){
+static void LoadHeuristics(String heuPath){
   try{/*Directly reading the gathered heuristics*/
-    FileInputStream fis = new FileInputStream("/home/abhilash/abhilash/hue_FULL.ser"); 
+    FileInputStream fis = new FileInputStream(heuPath); 
     ObjectInputStream ois = new ObjectInputStream(fis);
     hueristics = (Hueristics)ois.readObject();
     ois.close();
@@ -650,7 +650,8 @@ public static void main(String[] args){
 //  joinCoeff=Double.parseDouble(args[2]);
   System.out.println("Network Coeff:"+ networkCoeff);
   System.out.println("Join Coeff:" + joinCoeff);
-  LoadHeuristics();
+  String heuPath=args[0];
+  LoadHeuristics(heuPath);
   
  HashSet<String> vertexProperties=new HashSet<String>();
 // vertexProperties.add("patid");
