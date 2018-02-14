@@ -58,6 +58,20 @@ public class LuceneQueryingProp {
 			
 		}
 	
+		
+		private static void initLucene(long pseudoPid,String baseDir) throws InterruptedException, IOException{
+			
+			{
+//			  long pseudoPid=getSubgraph().getSubgraphId().get() >> 32;
+				initDone = true;
+				vertexIndexDir = new File( baseDir+"Partition" + pseudoPid + "/vertexIndex");
+				vertexDirectory = FSDirectory.open(vertexIndexDir);
+				analyzer = new StandardAnalyzer(Version.LATEST);
+				indexReader  = DirectoryReader.open(vertexDirectory);
+				indexSearcher = new IndexSearcher(indexReader);
+			}
+			
+		}
 		/**
 		 * 
 		 * uses index to query vertices/Edges that contain a particular property with specified value
@@ -86,7 +100,7 @@ public class LuceneQueryingProp {
 		
 		
 		int partid=Integer.parseInt(args[2]);
-		initLucene(partid);
+		initLucene(partid,args[3]);
 		String propertyName = args[0];
 		long totalHits=0;
 		try  {
