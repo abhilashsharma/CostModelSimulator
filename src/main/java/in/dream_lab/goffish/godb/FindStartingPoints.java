@@ -648,8 +648,8 @@ static void clear(){
 public static void main(String[] args){
 //  networkCoeff=Double.parseDouble(args[1]);
 //  joinCoeff=Double.parseDouble(args[2]);
-  System.out.println("Network Coeff:"+ networkCoeff);
-  System.out.println("Join Coeff:" + joinCoeff);
+//  System.out.println("Network Coeff:"+ networkCoeff);
+//  System.out.println("Join Coeff:" + joinCoeff);
   String heuPath=args[0];
   LoadHeuristics(heuPath);
   
@@ -672,7 +672,7 @@ public static void main(String[] args){
    for( Entry<String, vertexPredicateStats> pair:map.entrySet()){
      String key=pair.getKey().toString();
      Double value=pair.getValue().numberMatchingPredicate;
-     if(value < 2000){
+     if(value < 10000){
        System.out.println("Property:" + prop + ":Value:" + key + ":Match:" + value );
      }
      
