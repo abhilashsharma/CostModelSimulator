@@ -78,6 +78,7 @@ public static void main(String[] args) throws IOException{
 	long numVertices=Long.valueOf(args[1]);
 	long numEdges=Long.valueOf(args[2]);
 	long numRemoteVertices=Long.valueOf(args[3]);
+	String outputFileName=args[4];
 	Hueristics hueristics=new Hueristics();
 	HashMap<String,String> propertyMapping = new HashMap<String,String>();
 	String heuristicsBasePath="/scratch/abhilash/";
@@ -153,7 +154,7 @@ public static void main(String[] args) throws IOException{
 	
 	System.out.println("Writing heuristic object:" + heuristicsBasePath+String.valueOf("gplusHue_FULL")+".ser");
 	//store in file
-	File file = new File(heuristicsBasePath+String.valueOf("gplusHue_FULL")+".ser");
+	File file = new File(heuristicsBasePath+String.valueOf(outputFileName)+".ser");
 	if ( !file.exists() ) {
 		
 		file.getParentFile().mkdirs();
