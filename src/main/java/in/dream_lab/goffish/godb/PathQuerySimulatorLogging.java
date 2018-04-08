@@ -314,10 +314,8 @@ public class PathQuerySimulatorLogging{
 //              inVerticesMap = new HashMap<Long, HashMap<String,LinkedList<Long>>>();
 //              remoteSubgraphMap = new HashMap<Long, Long>();
 //              hueristics=HueristicsLoad.getInstance();//loading this at a different place
-
-                for(int i=0;i<noOfSteps;i++) {
-                 count[i]=new long[noOfSteps];
-                }
+                count =new long[noOfSteps][noOfSteps];
+                
                 
         }
 
