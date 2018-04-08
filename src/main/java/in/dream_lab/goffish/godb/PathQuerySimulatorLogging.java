@@ -1389,7 +1389,7 @@ public static void main(String[] args){
             Args=sCurrentLine;
             System.out.println(Args);
             init(Args);
-            computeSimulator();
+            computeNWFixed();
             clear();  
     }
     br.close();
