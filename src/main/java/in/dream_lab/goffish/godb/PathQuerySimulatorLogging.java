@@ -600,7 +600,13 @@ public class PathQuerySimulatorLogging{
 //                             	   System.out.println(queryPlan);
 //                                }
                                    
-                                System.out.println("Plan:" + count);
+                                for(int i =0;i<count.length;i++) {
+                                	String str="";
+                                	for(int j=0;j<count[i].length;i++) {
+                                		str=str+"," + count[i][j];
+                                	}
+                                	System.out.println(str);
+                                }
 
                                 
           
