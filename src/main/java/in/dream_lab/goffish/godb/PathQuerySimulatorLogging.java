@@ -1360,49 +1360,86 @@ static void clear(){
  noOfSteps=0;
 }
         
-public static void main(String[] args){
-	System.out.println("Simulating Path Query");
-//  networkCoeff=Double.parseDouble(args[1]);
-//  joinCoeff=Double.parseDouble(args[2]);
-//  indexCoeff=Double.parseDouble(args[3]);
-//  System.out.println("Network Coeff:"+ networkCoeff);
-//  System.out.println("Join Coeff:" + joinCoeff);
-//  System.out.println("Index Coeff:" + indexCoeff);
-	String heuPath=args[1];
-  LoadHeuristics(heuPath);
-  System.out.println("Completed Loading of heuristics");
-//  String queryStr="patid:string[4837891]@out?@patid:string[3287759]//0//163";
-  String Args="";
-  String fileName=args[0];
-  System.out.println("reading File for arguments:" + args[0]);
-  try
-  {
-    FileReader fr = new FileReader(fileName);
-    BufferedReader br = new BufferedReader(fr);
-
-    String sCurrentLine;
-
-  
-
-    while ((sCurrentLine = br.readLine()) != null) {
-            
-            Args=sCurrentLine;
-            System.out.println(Args);
-            init(Args);
-            computeNWFixed();
-            clear();  
-    }
-    br.close();
-  }catch(Exception e){
-   e.printStackTrace();
-  }
-    
-  
-  System.out.println("Completed");
-  
-}
+//public static void main(String[] args){
+//	System.out.println("Simulating Path Query");
+////  networkCoeff=Double.parseDouble(args[1]);
+////  joinCoeff=Double.parseDouble(args[2]);
+////  indexCoeff=Double.parseDouble(args[3]);
+////  System.out.println("Network Coeff:"+ networkCoeff);
+////  System.out.println("Join Coeff:" + joinCoeff);
+////  System.out.println("Index Coeff:" + indexCoeff);
+//	String heuPath=args[1];
+//  LoadHeuristics(heuPath);
+//  System.out.println("Completed Loading of heuristics");
+////  String queryStr="patid:string[4837891]@out?@patid:string[3287759]//0//163";
+//  String Args="";
+//  String fileName=args[0];
+//  System.out.println("reading File for arguments:" + args[0]);
+//  try
+//  {
+//    FileReader fr = new FileReader(fileName);
+//    BufferedReader br = new BufferedReader(fr);
+//
+//    String sCurrentLine;
+//
+//  
+//
+//    while ((sCurrentLine = br.readLine()) != null) {
+//            
+//            Args=sCurrentLine;
+//            System.out.println(Args);
+//            init(Args);
+//            computeNWFixed();
+//            clear();  
+//    }
+//    br.close();
+//  }catch(Exception e){
+//   e.printStackTrace();
+//  }
+//    
+//  
+//  System.out.println("Completed");
+//  
+//}
        
+public static void main(String[] args){
+	  networkCoeff=Double.parseDouble(args[1]);
+	  joinCoeff=Double.parseDouble(args[2]);
+	  indexCoeff=Double.parseDouble(args[3]);
+	  String heuPath=args[4];
+	  System.out.println("Network Coeff:"+ networkCoeff);
+	  System.out.println("Join Coeff:" + joinCoeff);
+	  System.out.println("Index Coeff:" + indexCoeff);
+	  LoadHeuristics(heuPath);
+	  String queryStr="patid:string[4837891]@out?@patid:string[3287759]//0//163";
+	  String Args="";
+	  String fileName=args[0];
+	  try
+	  {
+	    FileReader fr = new FileReader(fileName);
+	    BufferedReader br = new BufferedReader(fr);
 
+	    String sCurrentLine;
+
+	  
+
+	    while ((sCurrentLine = br.readLine()) != null) {
+	            
+	            Args=sCurrentLine;
+	            System.out.println(Args);
+	            init(Args);
+	            computeNWFixed();
+	            clear();  
+	    }
+	    br.close();
+	  }catch(Exception e){
+	    e.printStackTrace();
+	  }
+	    
+	  
+	  System.out.println("Completed");
+	  
+	}
 
 
 
