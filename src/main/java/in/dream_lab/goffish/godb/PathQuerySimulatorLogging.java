@@ -591,16 +591,18 @@ public class PathQuerySimulatorLogging{
                                 System.out.println("Starting Position:" + startPos +"  Query min Cost:" + minCost + "   Path Size:" + path.size());
                                 System.out.println("AllCosts:" + AllCostsStrings);
 //                                System.out.println("*******Querying done********:"+hits.length);
-                                for(int pos=0;pos<count.length;pos+=2) {
-                             	   String queryPlan = "Plan " + pos + ":";
-                             	   for(int i=0;i<count[pos].length;i++) {
-                             		   queryPlan+=queryPlan+"," + count[pos][i];
-                             	   }
-                             	   
-                             	   System.out.println(queryPlan);
-                                }
-                                         
-                                  
+//                                for(int pos=0;pos<count.length;pos++) {
+//                             	   String queryPlan = "Plan " + pos + ":";
+//                             	   for(int i=0;i<count[pos].length;i++) {
+//                             		   queryPlan+=queryPlan+"," + count[pos][i];
+//                             	   }
+//                             	   
+//                             	   System.out.println(queryPlan);
+//                                }
+                                   
+                                System.out.println("Plan:" + count);
+
+                                
           
                                   // TODO : else iteratively check for satisfying vertices
 //                                if ( queryPossible == true )
