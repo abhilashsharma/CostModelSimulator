@@ -602,7 +602,7 @@ public class PathQuerySimulatorLogging{
                                    
                                 for(int i =0;i<count.length;i++) {
                                 	String str="";
-                                	for(int j=0;j<count[i].length;i++) {
+                                	for(int j=0;j<count[i].length;j++) {
                                 		str=str+"," + count[i][j];
                                 	}
                                 	System.out.println(str);
