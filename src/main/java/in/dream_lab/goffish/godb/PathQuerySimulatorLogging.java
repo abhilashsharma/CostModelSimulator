@@ -1441,7 +1441,7 @@ public static void main(String[] args){
 	            Args=sCurrentLine;
 	            System.out.println(Args);
 	            init(Args);
-	            computeNWFixed();
+	            computeCoeff();
 	            clear();  
 	    }
 	    br.close();
