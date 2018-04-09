@@ -1439,7 +1439,7 @@ public static void main(String[] args){
 	    while ((sCurrentLine = br.readLine()) != null) {
 	            
 	            Args=sCurrentLine;
-	            System.out.println(Args);
+	            System.out.println("Query:"+Args);
 	            init(Args);
 	            computeCoeff();
 	            clear();  
