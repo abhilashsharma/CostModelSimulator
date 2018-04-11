@@ -833,7 +833,7 @@ public class PathQuerySimulatorLogging{
                                                                   currentStep = revIt.previous();
                                                           }
                                                   }
-                                                  joinCost *= resultSetNumber;
+                                                  joinCost += resultSetNumber;
                                                   System.out.println("RevJoinCost:" + joinCost);
                                                   if ( queryCostHolder[pos] != -1 && totalCost != -1) {
                                                           queryCostHolder[pos] += totalCost;
