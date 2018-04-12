@@ -526,7 +526,10 @@ public class PathQuerySimulatorLogging{
                                                                   currentStep = revIt.previous();
                                                           }
                                                   }
-                                                  joinCost *= joinCoeff*resultSetNumber;
+                                                  joinCost = joinCoeff*(joinCost+resultSetNumber);
+                                                  if(pos==0 || pos == (path.size()-1)){
+                                                      joinCost=0.0;
+                                                    }
                                                   if ( queryCostHolder[pos] != -1 && totalCost != -1) {
                                                           queryCostHolder[pos] += totalCost;
                                                           if (pos!=0 && pos!= path.size()-1)
@@ -1445,7 +1448,7 @@ public static void main(String[] args){
 	            Args=sCurrentLine;
 	            System.out.println("Query:"+Args);
 	            init(Args);
-	            computeCoeff();
+	            computeNWFixed();
 	            clear();  
 	    }
 	    br.close();
