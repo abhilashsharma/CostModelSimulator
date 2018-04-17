@@ -573,7 +573,7 @@ public class PathQuerySimulatorLogging{
                                             AllCostsStrings+="," + queryCostHolder[i];
                                           }
                                           
-                                          if ( queryCostHolder[i]!=0 && queryCostHolder[i]!=-1 && queryCostHolder[i] < minCost ){
+                                          if ( queryCostHolder[i]!=0 && queryCostHolder[i]!=-1 && queryCostHolder[i] <= minCost ){
                                                   minCost=queryCostHolder[i];
                                                   startPos = i;
                                           }
@@ -1448,7 +1448,8 @@ public static void main(String[] args){
 	            Args=sCurrentLine;
 	            System.out.println("Query:"+Args);
 	            init(Args);
-	            computeNWFixed();
+	            computeCoeff();
+	  
 	            clear();  
 	    }
 	    br.close();
