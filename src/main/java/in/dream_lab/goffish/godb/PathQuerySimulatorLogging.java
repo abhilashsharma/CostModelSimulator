@@ -666,8 +666,12 @@ public class PathQuerySimulatorLogging{
                                             //forward cost
                                             {       
                                                     Double totalCost = new Double(0);
-                                                    Double prevScanCost = hueristics.numVertices/2;
-                                                    Double resultSetNumber = hueristics.numVertices/2;
+                                                    Double prevScanCost = hueristics.numVertices;
+                                                    Double resultSetNumber = hueristics.numVertices;
+                                                    if(pos!=0) {
+                                                    	prevScanCost/=2;
+                                                    	resultSetNumber/=2;
+                                                    }
                                                     ListIterator<Step> It = path.listIterator(pos);
                                                     //Iterator<Step> It = path.iterator();
                                                     Step currentStep = It.next();
@@ -764,9 +768,12 @@ public class PathQuerySimulatorLogging{
                                             //reverse cost
                                             {
                                                     Double totalCost = new Double(0);
-                                                    Double prevScanCost = hueristics.numVertices/2;
-                                                    Double resultSetNumber = hueristics.numVertices/2;
-
+                                                    Double prevScanCost = hueristics.numVertices;
+                                                    Double resultSetNumber = hueristics.numVertices;
+                                                    if(pos!=(path.size()-1)) {
+                                                    	prevScanCost/=2;
+                                                    	resultSetNumber/=2;
+                                                    }
                                                     ListIterator<Step> revIt = path.listIterator(pos+1);
                                                     Step currentStep = revIt.previous();
                                                     while(revIt.hasPrevious()){
