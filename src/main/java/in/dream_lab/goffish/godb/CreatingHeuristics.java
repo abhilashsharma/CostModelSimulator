@@ -152,7 +152,7 @@ public static void main(String[] args) throws IOException{
 
 	}
 	
-	System.out.println("Writing heuristic object:" + heuristicsBasePath+String.valueOf("gplusHue_FULL")+".ser");
+	System.out.println("Writing heuristic object:" + heuristicsBasePath+String.valueOf(outputFileName)+".ser");
 	//store in file
 	File file = new File(heuristicsBasePath+String.valueOf(outputFileName)+".ser");
 	if ( !file.exists() ) {
