@@ -672,7 +672,7 @@ public static void main(String[] args){
    for( Entry<String, vertexPredicateStats> pair:map.entrySet()){
      String key=pair.getKey().toString();
      Double value=pair.getValue().numberMatchingPredicate;
-     if(value < 15000 && value > 5000){
+     if(value < 15000 && value > 2000){
        System.out.println("Property:" + prop + ":Value:" + key + ":Match:" + value );
      }
      
