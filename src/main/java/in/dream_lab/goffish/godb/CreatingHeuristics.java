@@ -88,10 +88,11 @@ public static void main(String[] args) throws IOException{
 	ObjectOutputStream oos;
 	//"employer", "school"," major","places_lived"
 	propertyMapping.put("0","vid");
-	propertyMapping.put("1","employer");
-	propertyMapping.put("2","school");
-	propertyMapping.put("3","major");
-	propertyMapping.put("4","places_lived");
+	propertyMapping.put("1","language");
+	propertyMapping.put("2","industry");
+	propertyMapping.put("3","contr");
+	propertyMapping.put("4","ispublic");
+	propertyMapping.put("5","follow");
 	
 	
 	try {
